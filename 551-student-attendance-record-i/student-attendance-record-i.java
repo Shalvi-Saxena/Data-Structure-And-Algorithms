@@ -1,11 +1,23 @@
 class Solution {
     public boolean checkRecord(String s) {
-        if(s.length() < 2)
-            return true;
-        if(s.contains("LLL"))
-            return false;
-        if(s.indexOf('A') < s.lastIndexOf('A'))
-            return false; 
-        return true;
+        int nA = 0, nL = 0;
+        for(Character item: s.toCharArray()) {
+            switch(item) {
+                case 'L':
+                    nL += 1;
+                    if(nL >= 3)
+                        return false;
+                    break;
+                case 'A':
+                    nA += 1;
+                    if(nA >= 2)
+                        return false;
+                    nL = 0;
+                    break;
+                default:
+                    nL = 0;                
+            }
+        }
+        return !(nA >= 2 || nL >= 3);    
     }
 }
