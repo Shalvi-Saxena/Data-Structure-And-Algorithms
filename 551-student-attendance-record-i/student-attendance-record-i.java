@@ -18,6 +18,6 @@ class Solution {
                     nL = 0;                
             }
         }
-        return !(nA >= 2 || nL >= 3);    
+        return true;    
     }
 }
