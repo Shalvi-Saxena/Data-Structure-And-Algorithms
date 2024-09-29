@@ -1,10 +1,6 @@
 class Solution {
     public boolean isValid(String str) {
         Stack<Character> s = new Stack<>();
-        HashMap<Character, Character> paren = new HashMap<>();
-        paren.put('}', '{');
-        paren.put(']', '[');
-        paren.put(')', '(');
         for(Character item: str.toCharArray()) {
             switch(item) {
                 case '{':
@@ -15,19 +11,19 @@ class Solution {
                 case '}':
                     if(s.size() == 0)
                             return false;
-                    if(Character.compare(paren.get(item), s.pop()) != 0)
+                    if(Character.compare(s.pop(), '{') != 0)
                         return false;
                     break;
                 case ')':
                     if(s.size() == 0)
                         return false;
-                    if(Character.compare(paren.get(item), s.pop()) != 0)
+                    if(Character.compare(s.pop(), '(') != 0)
                         return false;
                     break;
                 case ']':
                     if(s.size() == 0)
                         return false;
-                    if(Character.compare(paren.get(item), s.pop()) != 0)
+                    if(Character.compare(s.pop(), '[') != 0)
                         return false;
                     break;
             }
