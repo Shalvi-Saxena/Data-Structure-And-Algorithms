@@ -1,36 +1,21 @@
 class Solution {
     public String addStrings(String num1, String num2) {
         char[] arr1, arr2;
-        if(num1.length() > num2.length()) {
+        // if(num1.length() > num2.length()) {
             arr1 = num1.toCharArray();
             arr2 = num2.toCharArray();
-        } else {
-            arr1 = num2.toCharArray();
-            arr2 = num1.toCharArray();
-        }
-        int i=arr1.length-1, j=arr2.length-1, c=0;
+        // } else {
+        //     arr1 = num2.toCharArray();
+        //     arr2 = num1.toCharArray();
+        // }
         String res = "";
-        for(; i>=0 && j>=0; i--, j--) {
-            int sum = arr1[i]-48+arr2[j]-48+c;
-            c = sum/10;
-            sum %= 10;
+        for(int i=arr1.length-1, j=arr2.length-1, c=0; i>=0 || j>=0 || c>0; i--, j--) {
+            int a = i>=0? arr1[i]-'0':0;
+            int b = j>=0? arr2[j]-'0':0;
+            int sum = (a+b+c)%10;
             res = sum+res;
+            c = (a+b+c)/10;
         }
-        for(; i>=0; i--) {
-            int sum = arr1[i]-48+c;
-            c = sum/10;
-            sum %= 10;
-            res = sum+res;
-        }
-        for(; j>=0; j--) {
-            int sum = arr2[j]-48+c;
-            c = sum/10;
-            sum %= 10;
-            res = sum+res;
-        }
-        if(c > 0) {
-            res = c+res;
-        } 
         return res;
     }
 }
