@@ -11,12 +11,10 @@ class Solution {
         int f=0, l=arr.length-1;
         
         for (f=0; f<l; f++) {
-            // System.out.println("14 f = "+f+" l = "+l+" ");
                     
             if(checkVowel(arr[f])) {
-                for (l=l; l>f; l--) {
+                for (; l>f; l--) {
                     if (checkVowel(arr[l])) {
-                        // System.out.println("f = "+f+" l = "+l+" ");
                         char temp = arr[l];
                         arr[l] = arr[f];
                         arr[f] = temp;
