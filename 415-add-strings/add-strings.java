@@ -12,32 +12,20 @@ class Solution {
         String res = "";
         for(; i>=0 && j>=0; i--, j--) {
             int sum = arr1[i]-48+arr2[j]-48+c;
-            if(sum > 9) {
-                c = 1;
-                sum -= 10;
-            } else {
-                c=0;
-            }
+            c = sum/10;
+            sum %= 10;
             res = sum+res;
         }
         for(; i>=0; i--) {
             int sum = arr1[i]-48+c;
-            if(sum > 9) {
-                c = 1;
-                sum -= 10;
-            } else {
-                c = 0;
-            }
+            c = sum/10;
+            sum %= 10;
             res = sum+res;
         }
         for(; j>=0; j--) {
             int sum = arr2[j]-48+c;
-            if(sum > 9) {
-                c = 1;
-                sum -= 10;
-            } else {
-                c = 0;
-            }
+            c = sum/10;
+            sum %= 10;
             res = sum+res;
         }
         if(c > 0) {
