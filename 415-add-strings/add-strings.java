@@ -7,9 +7,9 @@ class Solution {
         for(int i=arr1.length-1, j=arr2.length-1, c=0; i>=0 || j>=0 || c>0; i--, j--) {
             int a = i>=0? arr1[i]-'0':0;
             int b = j>=0? arr2[j]-'0':0;
-            int sum = (a+b+c)%10;
-            res.append(sum);
-            c = (a+b+c)/10;
+            int sum = a+b+c;
+            res.append(sum%10);
+            c = sum/10;
         }
         return res.reverse().toString();
     }
