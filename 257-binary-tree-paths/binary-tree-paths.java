@@ -27,9 +27,7 @@ class Solution {
             res = binaryTreePathsNew(root.left, path, res);
             res = binaryTreePathsNew(root.right, path, res);
         }
-        // System.out.println(path.length() - temp.length() +".   "+ path.length()+".  path. "+ path+" temp "+temp);
         path.delete(path.length() - temp.length(), path.length());
-        // System.out.println("new.  "+(path.length() - temp.length()) +".   "+ path.length()+".  path. "+ path+" temp "+temp);
         return res;
     }
 
