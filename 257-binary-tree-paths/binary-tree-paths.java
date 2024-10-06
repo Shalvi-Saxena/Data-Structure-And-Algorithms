@@ -15,26 +15,31 @@
  */
 class Solution {
 
-    public List<String> binaryTreePathsNew(TreeNode root, String path, List<String> res) {
+    public List<String> binaryTreePathsNew(TreeNode root, StringBuilder path, List<String> res) {
         if(root == null) {
             return res;
         }
-        path = path+"->"+root.val;
+        String temp = "->"+root.val;
+        path.append(temp);
         if(root.left == null && root.right == null) {
-            res.add(path);
-            return res;
+            res.add(path.toString());
+        } else {
+            res = binaryTreePathsNew(root.left, path, res);
+            res = binaryTreePathsNew(root.right, path, res);
         }
-        res = binaryTreePathsNew(root.left, path, res);
-        res = binaryTreePathsNew(root.right, path, res);
+        // System.out.println(path.length() - temp.length() +".   "+ path.length()+".  path. "+ path+" temp "+temp);
+        path.delete(path.length() - temp.length(), path.length());
+        // System.out.println("new.  "+(path.length() - temp.length()) +".   "+ path.length()+".  path. "+ path+" temp "+temp);
         return res;
     }
 
     public List<String> binaryTreePaths(TreeNode root) {
-        String path = root.val+"";
+        StringBuilder path = new StringBuilder();
+        path.append(root.val);
         List<String> res = new ArrayList<String>();
         res = binaryTreePathsNew(root.left, path, res);
         res = binaryTreePathsNew(root.right, path, res);
-        if(res.size() == 0) res.add(path);
+        if(res.size() == 0) res.add(path.toString());
         return res;
     }
 }
