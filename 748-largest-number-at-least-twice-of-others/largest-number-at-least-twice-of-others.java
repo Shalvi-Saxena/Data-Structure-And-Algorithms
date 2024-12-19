@@ -8,7 +8,6 @@ class Solution {
         }
 
         for(int i=0; i<nums.length; i++) {
-        // System.out.println("Nums a "+nums[a]+" b "+nums[b]);
             if(nums[i] > nums[a]) {
                 b = nums[a] >= nums[b]? a:b;
                 a = i;
@@ -17,8 +16,6 @@ class Solution {
                 b = i;
             }
         }
-
-        // System.out.println("Nums a "+nums[a]+" b "+nums[b]);
 
         return nums[a] >= (2* nums[b])? a:-1;
     }
