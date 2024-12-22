@@ -4,8 +4,6 @@ class Solution {
         int[] count = new int[26];
         String ans = "*****************";
 
-        // System.out.println("licensePlate. "+licensePlate);
-
         for(Character ch: licensePlate.toCharArray()) {
             if(ch >= 'a' && ch <= 'z') {
                 count[ch-'a'] += 1;
@@ -13,13 +11,10 @@ class Solution {
         }
 
         for(String word: words) {
-            // System.out.println("word. "+word+"\ncount  + "+Arrays.toString(count)+"\ncount2 + "+Arrays.toString(getCount(word)));
-            
             if(word.length() < ans.length() && isCompleteWord(count, getCount(word))) {
                 ans = word;
             }
         }
-
         return ans;
     }
 
@@ -33,13 +28,11 @@ class Solution {
 
     public int[] getCount(String word) {
         int[] count = new int[26];
-        
         for(Character ch: word.toCharArray()) {
             if(ch >= 'a' && ch <= 'z') {
                 count[ch-'a'] += 1;
             }
         }
-
         return count;
     }
 }
