@@ -2,32 +2,27 @@ class Solution {
     public String shortestCompletingWord(String licensePlate, String[] words) {
         licensePlate = licensePlate.toLowerCase();
         int[] count = new int[26];
-        String ans = "****************", newStr = "";
+        String ans = "****************";
 
         for(Character ch: licensePlate.toCharArray()) {
             if(ch >= 'a' && ch <= 'z') {
                 count[ch-'a'] += 1;
-                newStr = newStr + ch;
             }
         }
 
         for(String word: words) {
-            if(word.length() < ans.length() && isCompleteWord(count, getCount(word), newStr)) {
+            if(word.length() < ans.length() && isCompleteWord(count, getCount(word))) {
                 ans = word;
             }
         }
         return ans;
     }
 
-    public boolean isCompleteWord(int[] word1, int[] word2, String newStr) {
-        for(Character ch: newStr.toCharArray()) {
-            if(word1[ch-'a'] > word2[ch-'a'])
+    public boolean isCompleteWord(int[] word1, int[] word2) {
+        for(int i=0; i<26; i++) {
+            if(word1[i] > word2[i])
                 return false;
         }
-        // for(int i=0; i<26; i++) {
-        //     if(word1[i] > word2[i])
-        //         return false;
-        // }
         return true;
     }
 
