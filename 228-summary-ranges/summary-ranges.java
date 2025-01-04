@@ -7,17 +7,17 @@ class Solution {
             if(nums[i+1] - nums[i] == 1) {
                 continue;
             } else {
-                ranges.add(count == i? nums[i]+"": nums[count]+"->"+nums[i]);
+                ranges.add(formatRange(nums[count],nums[i]));
                 count = i+1;
             }
         }
 
-        if(count == nums.length-1) {
-            ranges.add(nums[count]+"");
-        } else {
-            ranges.add(nums[count]+"->"+nums[nums.length-1]);
-        }
+        ranges.add(formatRange(nums[count], nums[nums.length - 1]));
 
         return ranges;
+    }
+
+    private String formatRange(int start, int end) {
+        return start == end ? String.valueOf(start) : start + "->" + end;
     }
 }
