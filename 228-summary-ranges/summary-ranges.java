@@ -1,23 +1,25 @@
 class Solution {
     public List<String> summaryRanges(int[] nums) {
         List<String> ranges = new ArrayList<>();
-        if(nums.length == 0)    return ranges;
-        int count = 0;
-        for(int i=0; i<nums.length-1; i++) {
-            if(nums[i+1] - nums[i] == 1) {
-                continue;
-            } else {
-                ranges.add(formatRange(nums[count],nums[i]));
-                count = i+1;
+        // if(nums.length == 0)    return ranges;
+        int n = nums.length;
+        for(int i=0; i<n; i++) {
+            StringBuilder range = new StringBuilder();
+            range.append(nums[i]);
+            boolean flag = false;
+
+            while(i < n-1 && nums[i]+1 == nums[i+1]) {
+                i++;
+                flag = true;
             }
+
+            if(flag) {
+                range.append("->");
+                range.append(nums[i]);
+            }
+            ranges.add(String.valueOf(range));
         }
 
-        ranges.add(formatRange(nums[count], nums[nums.length - 1]));
-
         return ranges;
-    }
-
-    private String formatRange(int start, int end) {
-        return start == end ? String.valueOf(start) : start + "->" + end;
     }
 }
