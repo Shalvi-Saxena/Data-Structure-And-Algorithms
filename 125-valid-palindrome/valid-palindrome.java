@@ -11,17 +11,17 @@ class Solution {
         char[] arr = s.toCharArray();
 
         for(int i=0, j=arr.length-1; i<arr.length && i<=j;) {
-
             if(checkValidNumChar(arr[i]) && checkValidNumChar(arr[j])) {
-                System.out.println("i = "+i+". j = "+j);
                 if(arr[i] != arr[j]) {
                     return false;
                 }
                 i++;
                 j--;
-            } else if(!checkValidNumChar(arr[i])) {
+            } 
+            while( i<arr.length && !checkValidNumChar(arr[i])) {
                 i++;
-            } else if(!checkValidNumChar(arr[j])) {
+            } 
+            while ( j>=0 && !checkValidNumChar(arr[j])) {
                 j--;
             }
 
