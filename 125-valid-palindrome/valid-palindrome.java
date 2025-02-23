@@ -10,7 +10,7 @@ class Solution {
         s = s.toLowerCase();
         char[] arr = s.toCharArray();
 
-        for(int i=0, j=arr.length-1; i<arr.length && i<=j;) {
+        for(int i=0, j=arr.length-1; i<j;) {
             if(checkValidNumChar(arr[i]) && checkValidNumChar(arr[j])) {
                 if(arr[i] != arr[j]) {
                     return false;
@@ -18,10 +18,10 @@ class Solution {
                 i++;
                 j--;
             } 
-            while( i<arr.length && !checkValidNumChar(arr[i])) {
+            while( i<j && !checkValidNumChar(arr[i])) {
                 i++;
             } 
-            while ( j>=0 && !checkValidNumChar(arr[j])) {
+            while ( j>i && !checkValidNumChar(arr[j])) {
                 j--;
             }
 
