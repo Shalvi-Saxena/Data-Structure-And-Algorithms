@@ -13,12 +13,12 @@ class Solution {
         boolean isLCA = false;
 
         while( !isLCA ) {
-            if((p.val <= root.val && q.val >= root.val) || (p.val >= root.val && q.val <= root.val)) {
-                return root;
-            }else if(p.val < root.val && q.val < root.val) {
+            if(p.val < root.val && q.val < root.val) {
                 root = root.left;
             } else if(p.val > root.val && q.val > root.val) {
                 root = root.right;
+            } else {
+                return root;
             }
         }
         return null;
