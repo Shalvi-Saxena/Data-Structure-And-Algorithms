@@ -6,7 +6,9 @@ class Solution {
             if(nums[mid] == target) {
                 return mid;
             }
-            if (end - start == 1)   break; 
+            if (end - start == 1) {
+                break; 
+            }
             if(target > nums[mid]) {
                 start = mid;
                 mid = ((end-start)/2)+start;
@@ -14,7 +16,6 @@ class Solution {
                 end = mid;
                 mid = ((end-start)/2)+start;
             }
-            // System.out.println("start "+start+". end "+end+". mid "+mid);
         }
         return -1;
     }
