@@ -25,12 +25,7 @@ class Solution {
         int leftHeight = inOrderBalanceCheck(root.left);
         int rightHeight = inOrderBalanceCheck(root.right);
 
-        if(leftHeight == -1 || rightHeight == -1) {
-            return -1;
-        }
-
-        if(Math.abs(leftHeight - rightHeight) > 1) {
-            // System.out.println("TreeNode. "+root.val+" left "+leftHeight+" right "+rightHeight);
+        if(leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1) {
             return -1;
         }
 
