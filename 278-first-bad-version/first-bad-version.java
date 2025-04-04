@@ -14,7 +14,7 @@ public class Solution extends VersionControl {
                 if(mid == 1 || !isBadVersion(mid-1)) {
                     return mid;
                 }
-                end = mid-1;
+                end = mid;
             } else {
                 start = mid+1;
             }
