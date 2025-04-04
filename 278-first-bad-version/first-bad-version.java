@@ -11,7 +11,7 @@ public class Solution extends VersionControl {
         while(start < end) {
             int mid = ((end-start)/2) + start;
             if(isBadVersion(mid)) {
-                if(mid == 1 || !isBadVersion(mid-1)) {
+                if(!isBadVersion(mid-1)) {
                     return mid;
                 }
                 end = mid;
