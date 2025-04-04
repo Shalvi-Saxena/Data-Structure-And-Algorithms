@@ -3,7 +3,7 @@
 
 public class Solution extends VersionControl {
     public int firstBadVersion(int n) {
-        if(isBadVersion(1)) {
+        if(n == 1 || isBadVersion(1)) {
             return 1;
         }
 
