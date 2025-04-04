@@ -1,18 +1,21 @@
 class Solution {
     public boolean canConstruct(String ransomNote, String magazine) {
-        char[] ransomArr = ransomNote.toCharArray();
-        char[] magazineArr = magazine.toCharArray();
-        Arrays.sort(ransomArr);
-        Arrays.sort(magazineArr);
-
-        int i = 0, len = magazineArr.length;
-        for(Character j: ransomArr) {
-            while(i<len && magazineArr[i] < j) i++;
-
-            if(i >= len || magazineArr[i] != j) return false;
-            i++;
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        
+        for(int i=0; i<ransomNote.length(); i++) {
+            map.put(ransomNote.charAt(i), map.getOrDefault(ransomNote.charAt(i), 0)+1);
         }
 
+        for(int i=0; i<magazine.length(); i++) {
+            map.computeIfPresent(magazine.charAt(i), (k, v) -> v-1);
+        }
+
+        System.out.println(map.values().toString());
+
+        for(Integer i: map.values()) {
+            if(i>0)
+                return false;
+        }
         return true;
     }
 }
