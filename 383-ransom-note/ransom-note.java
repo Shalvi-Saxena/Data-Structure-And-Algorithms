@@ -10,8 +10,6 @@ class Solution {
             map.computeIfPresent(magazine.charAt(i), (k, v) -> v-1);
         }
 
-        System.out.println(map.values().toString());
-
         for(Integer i: map.values()) {
             if(i>0)
                 return false;
