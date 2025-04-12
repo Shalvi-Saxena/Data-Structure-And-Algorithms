@@ -17,9 +17,6 @@ class Solution {
         }
 
         ListNode mid = middleNode(head.next, len+1);
-        // if(len == Math.ceil(length/2)) {
-        //     return head;
-        // }
 
         if(len <= Math.ceil(length/2)) {
             return mid;
