@@ -14,29 +14,13 @@
  * }
  */
 class Solution {
-    public int maxDepth(TreeNode root) {
+    public int maxDepth(TreeNode root, int depth) {
         if(root == null) {
-            return 0;
+            return depth;
         }
-        ArrayList<TreeNode> treeLevel = new ArrayList<TreeNode>();
-        treeLevel.add(root);
-        int level = 0;
-
-        while(!treeLevel.isEmpty()) {
-            level++;
-            ArrayList<TreeNode> tempLevel = new ArrayList<TreeNode>();
-            while(!treeLevel.isEmpty()) {
-                TreeNode temp = treeLevel.remove(0);
-                if(temp.left != null) {
-                    tempLevel.add(temp.left);
-                }
-                if(temp.right != null) {
-                    tempLevel.add(temp.right);
-                }
-                
-            }
-            treeLevel = tempLevel;
-        }
-        return level;
+        return Math.max(maxDepth(root.left, depth+1), maxDepth(root.right, depth+1));
+    }
+    public int maxDepth(TreeNode root) {
+        return maxDepth(root, 0);
     }
 }
