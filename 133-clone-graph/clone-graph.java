@@ -23,6 +23,10 @@ class Solution {
         if(node == null) {
             return null;
         }
+        if (node.neighbors.isEmpty()) {
+            return new Node(node.val);
+        }
+
         return DFS(node, new HashMap<Node, Node>());
     }
 
