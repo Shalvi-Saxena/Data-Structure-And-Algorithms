@@ -3,9 +3,9 @@ class Solution {
         boolean[] townTrustee = new boolean[n];
         int[] townTruster = new int[n];
 
-        for(int[] item: trust) {
-            townTrustee[item[0]-1] = true;
-            townTruster[item[1]-1] = townTruster[item[1]-1]+1;
+        for(int i=0; i<trust.length; i++) {
+            townTrustee[trust[i][0]-1] = true;
+            townTruster[trust[i][1]-1] = townTruster[trust[i][1]-1]+1;
         }
 
         for(int i=0; i<n; i++) {
