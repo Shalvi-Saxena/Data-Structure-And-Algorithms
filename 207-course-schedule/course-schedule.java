@@ -1,39 +1,41 @@
 class Solution {
-    public boolean isCycle(HashMap<Integer, ArrayList<Integer>> graph, ArrayList<Integer> isVisited, Integer course, boolean[] noCycleForCourse) {
-        if(isVisited.contains(course)) {
-            return true;
-        }
-        System.out.println("course. "+course);
-        isVisited.add(course);
-        if(!graph.containsKey(course) || noCycleForCourse[course]) {
-            return false;
-        }
+    public boolean isCycle(List<List<Integer>> graph, boolean[] isVisited, int course, boolean[] courseStack) {
+        isVisited[course] = true;
+        courseStack[course] = true;
+        
         for(Integer i: graph.get(course)) {
-            if(isCycle(graph, new ArrayList<Integer>(isVisited), i, noCycleForCourse)) {
+            if(courseStack[i]) {
                 return true;
             }
-            noCycleForCourse[i] = true;
+            if(!isVisited[i]) {
+                if(isCycle(graph, isVisited, i, courseStack)) {
+                    return true;
+                }
+            }
+            isVisited[i] = true;
         }
+        courseStack[course] = false;
         return false;
     }
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        HashMap<Integer, ArrayList<Integer>> graph = new HashMap<>();
-        for(int[] course: prerequisites) {
-            ArrayList<Integer> edges = graph.getOrDefault(course[0], new ArrayList<Integer>());
-            edges.add(course[1]);
-            graph.put(course[0], edges);
+        List<List<Integer>> graph = new ArrayList<>();
+        for(int i=0; i<numCourses; i++) {
+            graph.add(new ArrayList<Integer>());
         }
-        boolean[] noCycleForCourse = new boolean[numCourses+1]; 
-        for(Integer course: graph.keySet()) {
-            for(Integer i: graph.get(course)) {
-                if(!noCycleForCourse[i] && isCycle(graph, new ArrayList<Integer>(), i, noCycleForCourse)){
-                    System.out.println("course. "+course+". i  "+i);
+        for(int[] course: prerequisites) {
+            graph.get(course[0]).add(course[1]);
+        }
+        boolean[] isVisited = new boolean[numCourses];
+        boolean[] courseStack = new boolean[numCourses];
+
+        for(int i=0; i<numCourses; i++) {
+            if(!isVisited[i]) {
+                if(isCycle(graph, isVisited, i, courseStack)) {
                     return false;
                 }
-                noCycleForCourse[i] = true;
             }
-                noCycleForCourse[course] = true;
+            isVisited[i] = true;
         }
         return true;
     }
