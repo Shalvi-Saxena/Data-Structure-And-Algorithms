@@ -13,8 +13,7 @@ class Solution {
                 j++;
             }
             set.add(s.charAt(i));
-            maxLength = Math.max(maxLength, set.size());
-            // System.out.println("maxLength. "+maxLength+". i = "+i+". j = "+j+" set = "+set);
+            maxLength = Math.max(maxLength, i-j+1);
         }
 
         return maxLength;
