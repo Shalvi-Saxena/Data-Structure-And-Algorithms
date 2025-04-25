@@ -5,7 +5,7 @@ class Solution {
             return grid;
         }
         isVisited[i][j] = true;
-        grid[i][j] = '0';
+        // grid[i][j] = '0';
         grid = dfs(grid, i+1, j, m, n);
         grid = dfs(grid, i, j+1, m, n);
         grid = dfs(grid, i-1, j, m, n);
