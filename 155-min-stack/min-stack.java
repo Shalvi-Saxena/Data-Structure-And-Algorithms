@@ -1,36 +1,38 @@
 class MinStack {
-    // PriorityQueue<Integer> pq;
-    Stack<Integer> stack;
-    int min ;
+    class Node {
+        int val, min;
+        Node next;
+
+        private Node(int val, int min, Node next) {
+            this.val = val;
+            this.min = min;
+            this.next = next;
+        }
+    }
+    Node head;
 
     public MinStack() {
-        // pq = new PriorityQueue<>();
-        stack = new Stack<>();
-        min = Integer.MAX_VALUE;
     }
     
     public void push(int val) {
-        // pq.add(val);
-        stack.push(val);
-        min = Math.min(min, val);
+        if(head == null) {
+            head = new Node(val, val, null);
+        } else {
+            Node tempNode = new Node(val, Math.min(val, head.min), head);
+            head = tempNode;
+        }
     }
     
     public void pop() {
-        int val = stack.pop();
-        if(val == min) {
-            min = Integer.MAX_VALUE;
-            for(Integer i: stack) {
-                min = Math.min(i, min);
-            }
-        }     
+        head = head.next;
     }
     
     public int top() {
-        return stack.peek();        
+        return head.val;        
     }
     
     public int getMin() {
-        return min;
+        return head.min;
     }
 }
 
