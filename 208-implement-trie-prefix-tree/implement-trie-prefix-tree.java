@@ -38,7 +38,6 @@ class Trie {
             }
             tempRoot = tempRoot.nextNode[item-'a'];
         }
-        // System.out.println(tempRoot.val +".  "+tempRoot.end);
         return tempRoot.end;
     }
     
