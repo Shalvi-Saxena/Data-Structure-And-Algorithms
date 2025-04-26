@@ -6,10 +6,8 @@ class Solution {
 
         for(int i=0; i<nums.length-2 && nums[i] <= 0; i++) {
             int j=i+1, k=nums.length-1;
-            // System.out.println("i = "+i+" j = "+j+" k = "+k);
             while(j<k) {
                 int sum = nums[i]+nums[j]+nums[k];
-                // System.out.println("i = "+i+" j = "+j+" k = "+k+" sum = "+sum);
                 if(sum > 0) {
                     while(j<k && nums[k] == nums[--k]);
                 } else if(sum == 0) {
