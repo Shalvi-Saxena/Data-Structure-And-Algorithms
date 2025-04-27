@@ -14,8 +14,6 @@ class Solution {
 
         }
         
-        // System.out.println(".  dp = "+Arrays.toString(dp));
-        
         return dp[amount] == amount+1 ? -1 : dp[amount];
     }
 }
