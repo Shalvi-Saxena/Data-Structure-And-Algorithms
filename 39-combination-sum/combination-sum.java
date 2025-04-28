@@ -11,7 +11,7 @@ class Solution {
             if(sum+candidates[j] > target)  continue;
             path.add(candidates[j]);
             res = findCombination(candidates, target, sum+candidates[j], path, j, res);
-            path.remove(Integer.valueOf(candidates[j]));
+            path.remove(path.size()-1);
         }
         return res;
     }
