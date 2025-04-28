@@ -2,8 +2,6 @@ class Solution {
     public int binarySearch(int[] nums, int start, int end, int target) {
         int mid = start + ((end-start)/2);
 
-        System.out.println("start = "+start+" mid = "+mid+" end = "+end);
-
         if(start > end) {
             return -1;
         }
@@ -13,7 +11,7 @@ class Solution {
             return binarySearch(nums, mid+1, end, target);
         } else if(nums[mid] < target && nums[end] <= target) {
             return binarySearch(nums, start, mid-1, target);
-        } else if(nums[mid] < target && nums[end] <= target) {
+        } else if(nums[mid] > target && nums[end] <= target) {
             return binarySearch(nums, start, mid-1, target);
         } else if(nums[mid] > target && nums[start] <= target) {
             return binarySearch(nums, start, mid-1, target);
