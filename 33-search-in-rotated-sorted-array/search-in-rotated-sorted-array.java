@@ -2,8 +2,6 @@ class Solution {
     public int binarySearch(int[] nums, int start, int end, int target) {
         int mid = start + ((end-start)/2);
 
-        // System.out.println("start = "+start+". mid = "+mid+". end = "+end);
-
         if(start > end) {
             return -1;
         }
