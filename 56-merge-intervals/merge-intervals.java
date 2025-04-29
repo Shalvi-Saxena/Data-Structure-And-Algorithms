@@ -3,17 +3,22 @@ class Solution {
         if (intervals.length <= 1) return intervals;
 
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        int index = 0;
 
-        List<int[]> merged = new ArrayList<>();
-
-        for (int[] interval : intervals) {
-            if (merged.isEmpty() || merged.get(merged.size() - 1)[1] < interval[0]) {
-                merged.add(interval);
+        for (int i=1; i<intervals.length; i++) {
+            if(intervals[index][1] >= intervals[i][0]) {
+                intervals[index][1] = Math.max(intervals[index][1], intervals[i][1]);
             } else {
-                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], interval[1]);
+                index++;
+                intervals[index] = intervals[i];
             }
         }
 
-        return merged.toArray(new int[0][]);
+        int[][] merged = new int[index+1][2];
+        for(int i=0; i<=index; i++) {
+            merged[i] = intervals[i];
+        }
+
+        return merged;
     }
 }
