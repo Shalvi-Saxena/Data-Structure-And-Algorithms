@@ -1,38 +1,34 @@
 class Solution {
-    private static final int[][] DIRECTIONS = {{1,0}, {-1,0}, {0,1}, {0,-1}};
-
-    public boolean exist(char[][] board, String word) {
-        int rows = board.length, cols = board[0].length;
-        char[] str = word.toCharArray();
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (dfs(board, str, i, j, 0)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean dfs(char[][] board, char[] str, int i, int j, int k) {
-        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length ||
-            board[i][j] != str[k]) {
+    public boolean checkIfExists(char[][] board, char[] str, int i, int j, int k, boolean[][] isVisited) {
+        if(i<0 || j<0 || i>=board.length || j>=board[0].length || k>=str.length || isVisited[i][j] || board[i][j] != str[k]) {
             return false;
         }
 
-        if (k == str.length - 1) return true;
+        isVisited[i][j] = true;
+        k++;
+        if( k==str.length )    return true;
+        boolean isFound = checkIfExists(board, str, i+1, j, k, isVisited) || 
+        checkIfExists(board, str, i-1, j, k, isVisited) ||
+        checkIfExists(board, str, i, j-1, k, isVisited) ||
+        checkIfExists(board, str, i, j+1, k, isVisited);
 
-        board[i][j] = '#';
+        isVisited[i][j] = false;
+        return isFound;
+    }
 
-        for (int[] dir : DIRECTIONS) {
-            int ni = i + dir[0], nj = j + dir[1];
-            if (dfs(board, str, ni, nj, k + 1)) {
-                return true;
+    public boolean exist(char[][] board, String word) {
+        char[] str = word.toCharArray();
+
+        for(int i=0; i<board.length; i++) {
+            for(int j=0; j<board[0].length; j++) {
+                if(board[i][j] == str[0]) {
+                    if(checkIfExists(board, str, i, j, 0, new boolean[board.length][board[0].length])) {
+                        return true;
+                    }
+                }
             }
         }
 
-        board[i][j] = str[k];
         return false;
     }
 }
