@@ -1,48 +1,34 @@
 class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-        List<Integer> res = new ArrayList<>();
-        if(n==1) {
-            res.add(0);
-            return res;
-        }
+        if (n == 1) return Collections.singletonList(0);
+
         List<Set<Integer>> graph = new ArrayList<>();
-        int[] degree = new int[n];
-        for (int i = 0; i < n; i++) {
-            graph.add(new HashSet<Integer>());
-        }
+        for (int i = 0; i < n; i++) graph.add(new HashSet<>());
 
         for (int[] edge : edges) {
-            degree[edge[0]]++;  degree[edge[1]]++;
             graph.get(edge[0]).add(edge[1]);
             graph.get(edge[1]).add(edge[0]);
         }
 
-        List<Integer> leafNodes = new ArrayList<>();
+        List<Integer> leaves = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            if (degree[i] == 1) {
-                leafNodes.add(i);
-            }
+            if (graph.get(i).size() == 1) leaves.add(i);
         }
 
         int remainingNodes = n;
+        while (remainingNodes > 2) {
+            remainingNodes -= leaves.size();
+            List<Integer> newLeaves = new ArrayList<>();
 
-        while(n > 2) {
-            List<Integer> newLeafNodes = new ArrayList<>();
-            n -= leafNodes.size();
-
-            for(int node: leafNodes) {
-                if(graph.get(node).size() == 1) {
-                    int parent = graph.get(node).iterator().next();
-                    graph.get(parent).remove(node);
-                    if(graph.get(parent).size() == 1) {
-                        newLeafNodes.add(parent);
-                    }
-                    graph.get(node).remove(parent);
-                }
+            for (int leaf : leaves) {
+                int neighbor = graph.get(leaf).iterator().next();
+                graph.get(neighbor).remove(leaf);
+                if (graph.get(neighbor).size() == 1) newLeaves.add(neighbor);
             }
-            leafNodes = newLeafNodes;
+
+            leaves = newLeaves;
         }
 
-        return leafNodes;
+        return leaves;
     }
 }
