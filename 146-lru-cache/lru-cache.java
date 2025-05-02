@@ -1,10 +1,10 @@
 class LRUCache {
     HashMap<Integer, Integer> map;
-    List<Integer> keys;
+    LinkedList<Integer> keys;
     int capacity;
     public LRUCache(int capacity) {
         map = new HashMap<>();
-        keys = new ArrayList<>();
+        keys = new LinkedList<>();
         this.capacity = capacity;
     }
     
