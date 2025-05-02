@@ -1,15 +1,15 @@
 class Solution {
     public int leastInterval(char[] tasks, int n) {
-        HashMap<Character, Integer> count = new HashMap<>();
-        for(Character task: tasks) {
-            count.putIfAbsent(task, 0);
-            int i = count.get(task);
-            count.put(task, i+1);
+        int[] freq = new int[26];
+        for (char ch : tasks) {
+            freq[ch - 'A']++;
         }
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
         int time = 0;
-        for(Integer val: count.values()) {
-            maxHeap.add(val);
+        for (int i = 0; i < 26; ++i) {
+            if (freq[i] > 0) {
+                maxHeap.add(freq[i]);
+            }
         }
         while(!maxHeap.isEmpty()) {
             List<Integer> newHeap = new ArrayList<>();
