@@ -1,43 +1,40 @@
 class Solution {
     public String minWindow(String s, String t) {
-        if (s.length() < t.length()) {
-            return "";
+        if (s.length() < t.length()) return "";
+
+        HashMap<Character, Integer> required = new HashMap<>();
+        HashMap<Character, Integer> window = new HashMap<>();
+
+        for (char c : t.toCharArray()) {
+            required.put(c, required.getOrDefault(c, 0) + 1);
         }
 
-        HashMap<Character, Integer> map = new HashMap<>();
-        HashMap<Character, Integer> map2 = new HashMap<>();
-        for (char item : t.toCharArray()) {
-            map.put(item, map.getOrDefault(item, 0) + 1);
-        }
+        int have = 0, need = required.size();
+        int left = 0, minLen = Integer.MAX_VALUE, start = 0;
 
-        int matched = 0, start = 0, minLength = Integer.MAX_VALUE;
-        int left = 0;
         for (int right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
-            if (map.containsKey(c)) {
-                map2.put(c, map2.getOrDefault(c, 0) + 1);
-                if (map2.get(c).intValue() == map.get(c).intValue()) {
-                    matched++;
-                }
+            window.put(c, window.getOrDefault(c, 0) + 1);
+
+            if (required.containsKey(c) && window.get(c).intValue() == required.get(c).intValue()) {
+                have++;
             }
 
-            while (matched == map.size()) {
-                if (right - left + 1 < minLength) {
-                    minLength = right - left + 1;
+            while (have == need) {
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
                     start = left;
                 }
 
                 char leftChar = s.charAt(left);
-                if (map.containsKey(leftChar)) {
-                    map2.put(leftChar, map2.get(leftChar) - 1);
-                    if (map2.get(leftChar) < map.get(leftChar)) {
-                        matched--;
-                    }
+                window.put(leftChar, window.get(leftChar) - 1);
+                if (required.containsKey(leftChar) && window.get(leftChar) < required.get(leftChar)) {
+                    have--;
                 }
                 left++;
             }
         }
 
-        return minLength == Integer.MAX_VALUE ? "" : s.substring(start, start + minLength);
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
     }
 }
