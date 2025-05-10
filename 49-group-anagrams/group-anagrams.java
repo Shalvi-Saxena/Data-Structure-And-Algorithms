@@ -1,28 +1,18 @@
 class Solution {
-    public String createHashKey(String str) {
-        int[] count = new int[26];
-        for(char ch: str.toCharArray()) {
-            count[ch-'a']++;
-        }
-        StringBuilder key = new StringBuilder();
-        for(int i=0; i<26; i++) {
-            if(count[i] > 0) {
-                key.append((char)(i+'a'));
-                key.append(count[i]);
-            }
-        }
-        return key.toString();
-    }
+    int[] primes = { 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 
+        41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103 };
+
     public List<List<String>> groupAnagrams(String[] strs) {
-        HashMap<String, List<String>> map = new HashMap<>();
         List<List<String>> res = new ArrayList<>();
-        for(String str: strs) {
-            String key = createHashKey(str);
-            if(map.containsKey(key)) {
-                map.get(key).add(str);
-            } else {
+        Map<Integer, List<String>> map = new HashMap<>();
+        for (String s : strs) {
+            int key = 1;
+            for (char c : s.toCharArray()) key *= primes[c - 'a'];
+
+            if (map.containsKey(key)) map.get(key).add(s);
+            else {
                 List<String> value = new ArrayList<>();
-                value.add(str);
+                value.add(s);
                 map.put(key, value);
                 res.add(value);
             }
