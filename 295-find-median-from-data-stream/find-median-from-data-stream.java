@@ -1,6 +1,7 @@
 class MedianFinder {
     PriorityQueue<Integer> rightHeap;
     PriorityQueue<Integer> leftHeap;
+    double med = 0;
 
     public MedianFinder() {
         rightHeap = new PriorityQueue<>();
@@ -14,14 +15,15 @@ class MedianFinder {
         if(rightHeap.size() > leftHeap.size()) {
             leftHeap.add(rightHeap.poll());
         }
+        if(leftHeap.size() == rightHeap.size()) {
+            med = (leftHeap.peek()+rightHeap.peek())/2.0;
+        } else {
+            med = leftHeap.peek();
+        }
     }
     
     public double findMedian() {
-        if(leftHeap.size() == rightHeap.size()) {
-            double sum = leftHeap.peek()+rightHeap.peek();
-            return sum/2;
-        }
-        return leftHeap.peek();
+        return med;
     }
 }
 
