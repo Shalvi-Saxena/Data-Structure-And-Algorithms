@@ -1,6 +1,7 @@
 class Solution {
     public int trap(int[] height) {
         int n = height.length, lMax = height[0], water = 0;
+        if (n <= 2) return 0;
         Stack<Integer> rMax = new Stack<>();
         rMax.push(height[n-1]);
         for(int i=n-2; i>0; i--) {
