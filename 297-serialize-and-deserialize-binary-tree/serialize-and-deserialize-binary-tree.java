@@ -8,44 +8,41 @@
  * }
  */
 public class Codec {
-
-    public List<String> preOrder(TreeNode root, List<String> arr) {
+    public void serializeTree(TreeNode root, StringBuilder tree) {
         if(root == null) {
-            arr.add("null");
-            return arr;
+            tree.append("null,");
+            return;
         }
-        arr.add(String.valueOf(root.val));
-        arr = preOrder(root.left, arr);
-        arr = preOrder(root.right, arr);
-        return arr;
+        tree.append(root.val+",");
+        serializeTree(root.left, tree);
+        serializeTree(root.right, tree);
     }
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        List<String> tree = preOrder(root, new ArrayList<>());
-        System.out.println("tree = "+ String.join(",",tree));
-        return String.join(",",tree);
+        if(root == null)    return null;
+        StringBuilder tree = new StringBuilder();
+        serializeTree(root, tree);
+        return String.valueOf(tree);
     }
 
-    int index;
-
-    public TreeNode createTree(String[] dataArr) {
-        if(dataArr[index].compareTo("null") == 0) {
+    int index = 0;
+    public TreeNode deserializeTree(String[] nodes) {
+        if(index > nodes.length-1 || nodes[index].equals("null")) {
             index++;
             return null;
         }
-        TreeNode root = new TreeNode(Integer.valueOf(dataArr[index++]));
-        root.left = createTree(dataArr);
-        root.right = createTree(dataArr);
+        TreeNode root = new TreeNode(Integer.valueOf(nodes[index++]));
+        root.left = deserializeTree(nodes);
+        root.right = deserializeTree(nodes);
         return root;
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        index = 0;
-        String[] dataArr = data.split(",");
-        
-        return createTree(dataArr);
+        if(data == null)    return null;
+        String[] nodes = data.split(",");
+        return deserializeTree(nodes);
     }
 }
 
