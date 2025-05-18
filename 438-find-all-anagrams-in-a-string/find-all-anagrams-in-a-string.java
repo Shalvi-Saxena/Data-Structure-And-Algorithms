@@ -1,27 +1,37 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-        int[] count = new int[26];
-        char[] pArr = p.toCharArray(), sArr = s.toCharArray();
-        for(char ch: pArr) {
-            count[ch-'a']++;
+        if(p.length() > s.length()) {
+            return new ArrayList<>();
         }
-        List<Integer> anagrams = new ArrayList<>();
-        int[] charCount = new int[26];
-        
-        for(int i=0, j=0; i<sArr.length && j<=i; i++) {
-            int index = sArr[i]-'a';
-            charCount[index]++;
-            if(charCount[index] > count[index]) {
-                while(j<i && sArr[j] != sArr[i]) {
-                    charCount[sArr[j++]-'a']--;
+
+        int[] sCount = new int[26];
+        int[] pCount = new int[26];
+        char[] sArr = s.toCharArray();
+        List<Integer> res = new ArrayList<>();
+
+        for(char ch: p.toCharArray()) {
+            pCount[ch-'a']++;
+        }
+
+        for(int l=0, r=0; l<=r && r<sArr.length; r++) {
+            int ind = sArr[r] - 'a';
+            sCount[ind]++;
+
+            if(sCount[ind] > pCount[ind]) {
+
+                while(l<r && sArr[l] != sArr[r]) {
+                    sCount[sArr[l++]-'a']--;
                 }
-                charCount[sArr[j++]-'a']--;
+                sCount[sArr[l++] - 'a']--;
+
             } 
-            if(i-j == pArr.length-1) {
-                anagrams.add(j);
+            
+            if((r-l+1) == p.length()) {
+                res.add(l);
             }
         }
 
-        return anagrams;
+
+        return res;
     }
 }
