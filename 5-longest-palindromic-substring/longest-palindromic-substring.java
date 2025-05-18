@@ -1,32 +1,29 @@
 class Solution {
     public String longestPalindrome(String s) {
-        if(s.length() <= 1)   return s;
-        int start=0, maxLength=1;
-        char[] str = s.toCharArray();
-        for(int i=0; i<str.length-1; i++) {
-            // Check for odd length
-            int low = i-1, high = i+1;
-            while(low >= 0 && high < str.length && str[low] == str[high]) {
-                if(high-low+1 > maxLength) {
-                    start = low;
-                    maxLength = high-low+1;
+        if(s.length() <=1 ) {
+            return s;
+        }
+        int maxSize = 1, start=0, n = s.length();
+        char[] sArr = s.toCharArray();
+
+        for(int i=0; i<s.length()-1; i++) {
+            for(int l=i-1, r=i+1; l>=0 && r<s.length() && sArr[l] == sArr[r]; l--, r++) {
+                if(r-l+1 > maxSize) {
+                    maxSize = r-l+1;
+                    start = l;
                 }
-                low--;
-                high++;
             }
-            // Check for even length
-            if(str[i] == str[i+1]) {
-                low = i; high = i+1;
-                while(low >= 0 && high < str.length && str[low] == str[high]) {
-                    if(high-low+1 > maxLength) {
-                        start = low;
-                        maxLength = high-low+1;
+
+            if(sArr[i] == sArr[i+1]) {
+                for(int l=i, r=i+1; l>=0 && r<s.length() && sArr[l] == sArr[r]; l--, r++) {
+                    if(r-l+1 > maxSize) {
+                        maxSize = r-l+1;
+                        start = l;
                     }
-                    low--;
-                    high++;
                 }
             }
         }
-        return s.substring(start, start+maxLength);
+
+        return s.substring(start, start+maxSize);
     }
 }
