@@ -1,34 +1,41 @@
 class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-        if (n == 1) return Collections.singletonList(0);
-
-        List<Set<Integer>> graph = new ArrayList<>();
-        for (int i = 0; i < n; i++) graph.add(new HashSet<>());
-
-        for (int[] edge : edges) {
+        if(n<=1) {
+            return Arrays.asList(0);
+        }
+        HashMap<Integer, HashSet<Integer>> graph = new HashMap<>();
+        for(int[] edge: edges) {
+            graph.putIfAbsent(edge[0], new HashSet<>());
+            graph.putIfAbsent(edge[1], new HashSet<>());
             graph.get(edge[0]).add(edge[1]);
             graph.get(edge[1]).add(edge[0]);
         }
 
-        List<Integer> leaves = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            if (graph.get(i).size() == 1) leaves.add(i);
+        Queue<Integer> queue = new LinkedList<>();
+
+        for(Integer key: graph.keySet()) {
+            if(graph.get(key).size() <= 1) {
+                queue.add(key);
+            }
         }
 
         int remainingNodes = n;
-        while (remainingNodes > 2) {
-            remainingNodes -= leaves.size();
-            List<Integer> newLeaves = new ArrayList<>();
 
-            for (int leaf : leaves) {
-                int neighbor = graph.get(leaf).iterator().next();
-                graph.get(neighbor).remove(leaf);
-                if (graph.get(neighbor).size() == 1) newLeaves.add(neighbor);
+        while(remainingNodes>2) {
+            remainingNodes -= queue.size();
+            int size = queue.size();
+            while(size-- > 0) {
+                int key = queue.poll();
+                for(int node: graph.get(key)) {
+                    graph.get(node).remove(key);
+                    if(graph.get(node).size() == 1) {
+                        queue.add(node);
+                    }
+                }
+                graph.remove(key);
             }
-
-            leaves = newLeaves;
         }
 
-        return leaves;
+        return new ArrayList<>(queue);
     }
 }
