@@ -1,32 +1,37 @@
 class Solution {
     public int leastInterval(char[] tasks, int n) {
-        int[] freq = new int[26];
-        for (char ch : tasks) {
-            freq[ch - 'A']++;
+        HashMap<Character, Integer> task = new HashMap<>();
+        for(char ch: tasks) {
+            task.put(ch, task.getOrDefault(ch, 0)+1);
         }
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
-        int time = 0;
-        for (int i = 0; i < 26; ++i) {
-            if (freq[i] > 0) {
-                maxHeap.add(freq[i]);
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+        for(char key: task.keySet()) {
+            pq.add(task.get(key));
+        }
+
+        int minCycle = 0;
+
+        while(!pq.isEmpty()) {
+            int cycle=n+1, s = pq.size();
+            List<Integer> temp = new ArrayList<>();
+
+            for(int i=0; i<cycle && !pq.isEmpty(); i++) {
+                int time = pq.poll()-1;
+                if(time > 0) {
+                    temp.add(time);
+                }
+            }
+            if(pq.isEmpty() && temp.size() == 0) {
+                minCycle += s;
+            } else {
+                minCycle += cycle;
+            }
+            for(int i:temp) {
+                pq.add(i);
             }
         }
-        while(!maxHeap.isEmpty()) {
-            List<Integer> newHeap = new ArrayList<>();
-            int task=0, cycle=n+1;
 
-            while(cycle-- > 0 && !maxHeap.isEmpty()) {
-                int currTask = maxHeap.poll();
-                if(currTask > 1)    newHeap.add(currTask-1);
-                task++;
-            }
-
-            for(int i: newHeap) {
-                maxHeap.add(i);
-            }
-
-            time += (maxHeap.isEmpty())? task: n+1;
-        }
-        return time;
+        return minCycle;
     }
 }
