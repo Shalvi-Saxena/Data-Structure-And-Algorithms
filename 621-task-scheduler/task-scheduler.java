@@ -13,23 +13,20 @@ class Solution {
         int minCycle = 0;
 
         while(!pq.isEmpty()) {
-            int cycle=n+1, s = pq.size();
+            int count = 0;
             List<Integer> temp = new ArrayList<>();
 
-            for(int i=0; i<cycle && !pq.isEmpty(); i++) {
+            for(int i=0; i<n+1 && !pq.isEmpty(); i++) {
                 int time = pq.poll()-1;
                 if(time > 0) {
                     temp.add(time);
                 }
-            }
-            if(pq.isEmpty() && temp.size() == 0) {
-                minCycle += s;
-            } else {
-                minCycle += cycle;
+                count++;
             }
             for(int i:temp) {
                 pq.add(i);
             }
+            minCycle += pq.isEmpty()? count:(n+1);
         }
 
         return minCycle;
