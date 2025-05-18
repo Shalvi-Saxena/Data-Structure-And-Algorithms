@@ -3,18 +3,20 @@ class Solution {
         if(n<=1) {
             return Arrays.asList(0);
         }
-        HashMap<Integer, HashSet<Integer>> graph = new HashMap<>();
+        List<HashSet<Integer>> graph = new ArrayList<>();
+
+        for(int i=0; i<n; i++) {
+            graph.add(new HashSet<>());
+        }
         for(int[] edge: edges) {
-            graph.putIfAbsent(edge[0], new HashSet<>());
-            graph.putIfAbsent(edge[1], new HashSet<>());
             graph.get(edge[0]).add(edge[1]);
             graph.get(edge[1]).add(edge[0]);
         }
 
         Queue<Integer> queue = new LinkedList<>();
 
-        for(Integer key: graph.keySet()) {
-            if(graph.get(key).size() <= 1) {
+        for(int key=0; key<n; key++) {
+            if(graph.get(key).size() == 1) {
                 queue.add(key);
             }
         }
@@ -28,11 +30,11 @@ class Solution {
                 int key = queue.poll();
                 for(int node: graph.get(key)) {
                     graph.get(node).remove(key);
+                    graph.get(key).remove(node);
                     if(graph.get(node).size() == 1) {
                         queue.add(node);
                     }
                 }
-                graph.remove(key);
             }
         }
 
