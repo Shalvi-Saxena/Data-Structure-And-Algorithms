@@ -1,32 +1,32 @@
 class Solution {
     public int myAtoi(String s) {
-        long result=0, maxValue = (long)Integer.MAX_VALUE+1;
-        int i=0, conv=1;
-        char[] str = s.toCharArray();
-        while(i<str.length && str[i] == ' ') {
-            i++;
+        if(s == null || s.length() == 0) {
+            return 0;
         }
-        if(i<str.length && str[i] == '-') {
-            conv = -1;
-            i++;
-        } else if(i<str.length && str[i] == '+') {
-            i++;
-        }
-        while(i<str.length && str[i] >= '0' && str[i] <= '9' && result <= maxValue) {
-            result *= 10;
-            result += str[i]-'0';
+        int i=0, sign=1, n=s.length();
+        long num=0;
+        char[] arr = s.toCharArray();
+
+        while(i<n && arr[i] == ' ') {
             i++;
         }
 
-        result *= conv;
-
-        if(result <= Integer.MIN_VALUE) {
-            return Integer.MIN_VALUE;
-        }
-        if(result >= Integer.MAX_VALUE) {
-            return Integer.MAX_VALUE;
+        if(i<n && arr[i] == '+') {
+            i++;
+        } else if(i<n && arr[i] == '-') {
+            sign = -1;
+            i++;
         }
 
-        return (int) result;
+        for(; i<n && arr[i] >= '0' && arr[i] <= '9' && num <= Integer.MAX_VALUE; i++) {
+            num*=10;
+            num+= arr[i]-'0';
+        }
+
+        if(num > Integer.MAX_VALUE) {
+            return sign>0? Integer.MAX_VALUE: Integer.MIN_VALUE;
+        }
+
+        return (int)num*sign;
     }
 }
