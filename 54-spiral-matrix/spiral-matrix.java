@@ -1,34 +1,30 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        int m = matrix.length;
-        int n = matrix[0].length;
-        List<Integer> spiralOrder = new ArrayList<>();
+        List<Integer> res = new ArrayList<>();
+        int startRow = 0, endRow = matrix.length-1;
+        int startCol = 0, endCol = matrix[0].length-1;
 
-        int rowStart = 0, rowEnd = m - 1;
-        int colStart = 0, colEnd = n - 1;
-
-        while (rowStart <= rowEnd && colStart <= colEnd) {
-            for (int j = colStart; j <= colEnd; j++) {
-                spiralOrder.add(matrix[rowStart][j]);
+        while(startRow <= endRow && startCol <= endCol) {
+            for(int i=startCol; i<=endCol; i++) {
+                res.add(matrix[startRow][i]);
             }
-            for (int i = rowStart + 1; i <= rowEnd; i++) {
-                spiralOrder.add(matrix[i][colEnd]);
+            for(int i=startRow+1; i<=endRow; i++) {
+                res.add(matrix[i][endCol]);
             }
-            if (rowStart < rowEnd) {
-                for (int j = colEnd - 1; j >= colStart; j--) {
-                    spiralOrder.add(matrix[rowEnd][j]);
+            if(startRow < endRow) {
+                for(int i=endCol-1; i>=startCol; i--) {
+                    res.add(matrix[endRow][i]);
                 }
             }
-            if (colStart < colEnd) {
-                for (int i = rowEnd - 1; i > rowStart; i--) {
-                    spiralOrder.add(matrix[i][colStart]);
+            if(startCol < endCol) {
+                for(int i=endRow-1; i>startRow; i--) {
+                    res.add(matrix[i][startCol]);
                 }
             }
-
-            rowStart++; rowEnd--;
-            colStart++; colEnd--;
+            startRow++; endRow--;
+            startCol++; endCol--;
         }
 
-        return spiralOrder;
+        return res;
     }
 }
