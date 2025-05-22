@@ -1,21 +1,17 @@
 class Solution {
-    public void createSubsets(int[] nums, int i, List<Integer> subset, List<List<Integer>> superSet) {
-        if(nums.length == i) {
-            superSet.add(new ArrayList<Integer>(subset));
-            return;
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> powerSet = new ArrayList<>();
+        powerSet.add(new ArrayList<>());
+
+        for(int i=0; i<nums.length; i++) {
+            int size = powerSet.size();
+            for(int j=0; j<size; j++) {
+                List<Integer> tempSet = new ArrayList<>(powerSet.get(j));
+                tempSet.add(nums[i]);
+                powerSet.add(tempSet);
+            }
         }
 
-        subset.add(nums[i]);
-        createSubsets(nums, i+1, subset, superSet);
-        subset.remove(subset.size()-1);
-        createSubsets(nums, i+1, subset, superSet);
-
-        return;
-    }
-
-    public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> superSet = new ArrayList<>();
-        createSubsets(nums, 0, new ArrayList<Integer>(), superSet);
-        return superSet;
+        return powerSet;
     }
 }
