@@ -1,29 +1,32 @@
 class Solution {
-    public void swap(int[] nums, int start, int end) {
-        int temp = nums[start];
-        nums[start] = nums[end];
-        nums[end] = temp;
+    public void swap(int[] nums, int j, int k) {
+        int a = nums[j];
+        nums[j] = nums[k];
+        nums[k] = a;
     }
-    public void findComb(int[] nums, int start, List<List<Integer>> combinations) {
-        if(start == nums.length) {
-            List<Integer> combination = new ArrayList<>();
-            for(int i: nums) {
-                combination.add(i);
-            }
-            combinations.add(combination);
+    public void permute(int[] nums, List<Integer> perm, List<List<Integer>> res, int i) {
+        if(perm.size() == nums.length) {
+            res.add(new ArrayList<>(perm));
             return;
         }
-        for(int i=start; i<nums.length; i++) {
-            swap(nums, start, i);
-            findComb(nums, start+1, combinations);
-            swap(nums, start, i);
-        }
+        for(int j=i; j<nums.length; j++) {
+            perm.add(nums[j]);
+            permute(nums, perm, res, j+1);
+            perm.remove(perm.size()-1);
 
-        return;
+            for(int k=j+1; k<nums.length; k++) {
+                swap(nums, j, k);
+                perm.add(nums[j]);
+                permute(nums, perm, res, j+1);
+                swap(nums, j, k);
+                perm.remove(perm.size()-1);
+            }
+        }
+        return; 
     }
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        findComb(nums, 0, res);
+        permute(nums, new ArrayList<>(), res, 0);
         return res;
     }
 }
