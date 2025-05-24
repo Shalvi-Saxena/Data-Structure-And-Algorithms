@@ -7,6 +7,9 @@ class Solution {
             return;
         }
         for(int j=i; j<candidates.length; j++) {
+            if(sum+candidates[j] > target) {
+                break;
+            }
             comb.add(candidates[j]);
             getCombinations(candidates, target, comb, j, sum+candidates[j]);
             comb.remove(comb.size()-1);
@@ -15,6 +18,7 @@ class Solution {
     }
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         res = new ArrayList<>();
+        Arrays.sort(candidates);
         getCombinations(candidates, target, new ArrayList<>(), 0, 0);   
         return res;
     }
