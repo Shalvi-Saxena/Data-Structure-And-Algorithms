@@ -21,15 +21,12 @@ class Solution {
         if(root.val <= min || root.val >= max) {
             return false;
         }
-
-        return validateBST(root.left, min, root.val) && 
-        validateBST(root.right, root.val, max);
+        return validateBST(root.left, min, root.val) && validateBST(root.right, root.val, max);
     }
-
     public boolean isValidBST(TreeNode root) {
         if(root == null || (root.left == null && root.right == null)) {
             return true;
         }
-        return validateBST(root, Long.MIN_VALUE, Long.MAX_VALUE);   
+        return validateBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 }
