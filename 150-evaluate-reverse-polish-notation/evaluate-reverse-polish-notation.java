@@ -1,34 +1,33 @@
 class Solution {
     public int evalRPN(String[] tokens) {
-        Stack<Integer> exp = new Stack<>();
+        LinkedList<Integer> list = new LinkedList<>();
         int a,b;
-
         for(String token: tokens) {
             switch(token) {
                 case "+":
-                    b = exp.pop();
-                    a = exp.pop();
-                    exp.push(a+b);
+                    a = list.removeFirst();
+                    b = list.removeFirst();
+                    list.addFirst(a+b);
                     break;
                 case "-":
-                    b = exp.pop();
-                    a = exp.pop();
-                    exp.push(a-b);
-                    break;
-                case "/":
-                    b = exp.pop();
-                    a = exp.pop();
-                    exp.push(a/b);
+                    a = list.removeFirst();
+                    b = list.removeFirst();
+                    list.addFirst(b-a);
                     break;
                 case "*":
-                    b = exp.pop();
-                    a = exp.pop();
-                    exp.push(a*b);
+                    a = list.removeFirst();
+                    b = list.removeFirst();
+                    list.addFirst(a*b);
+                    break;
+                case "/":
+                    a = list.removeFirst();
+                    b = list.removeFirst();
+                    list.addFirst(b/a);
                     break;
                 default:
-                    exp.push(Integer.parseInt(token));
+                    list.addFirst(Integer.valueOf(token));
             }
         }
-        return Integer.valueOf(exp.peek());
+        return list.removeFirst();
     }
 }
