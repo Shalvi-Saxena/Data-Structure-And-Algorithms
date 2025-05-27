@@ -13,15 +13,19 @@ class Solution {
             while(j<k) {
                 sum = nums[i]+nums[j]+nums[k];
                 if(sum < 0) {
-                    while(j<k && nums[j] == nums[++j]);
+                    j++;
+                    while(j<k && nums[j] == nums[j-1])  j++;
                 } else if(sum > 0) {
-                    while(j<k && nums[k] == nums[--k]);
+                    k--;
+                    while(j<k && nums[k] == nums[k+1])  k--;
                 }
                 else {
                     List<Integer> triplet = Arrays.asList(nums[i], nums[j], nums[k]);
                     triplets.add(triplet);
-                    while(j<k && nums[j] == nums[++j]);
-                    while(j<k && nums[k] == nums[--k]);
+                    j++;
+                    k--;
+                    while(j<k && nums[j] == nums[j-1])  j++;
+                    while(j<k && nums[k] == nums[k+1])  k--;
                 }
             }
             while(i<n-1 && nums[i] == nums[i+1]) {
