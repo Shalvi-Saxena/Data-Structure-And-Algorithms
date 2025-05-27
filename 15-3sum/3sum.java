@@ -18,10 +18,7 @@ class Solution {
                     while(j<k && nums[k] == nums[--k]);
                 }
                 else {
-                    List<Integer> triplet = new ArrayList<>();
-                    triplet.add(nums[i]);
-                    triplet.add(nums[j]);
-                    triplet.add(nums[k]);
+                    List<Integer> triplet = Arrays.asList(nums[i], nums[j], nums[k]);
                     triplets.add(triplet);
                     while(j<k && nums[j] == nums[++j]);
                     while(j<k && nums[k] == nums[--k]);
