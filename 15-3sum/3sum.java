@@ -5,6 +5,8 @@ class Solution {
         List<List<Integer>> triplets = new ArrayList<>();
         int n=nums.length, sum=0;
 
+        if(nums[n-1] < 0)   return triplets;
+
         for(int i=0; i<(n-2) && nums[i]<=0; i++) {
             int j = i+1, k = n-1;
 
