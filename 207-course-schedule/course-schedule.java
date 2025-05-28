@@ -1,42 +1,41 @@
 class Solution {
-    public boolean isCycle(List<List<Integer>> graph, boolean[] isVisited, int course, boolean[] courseStack) {
-        isVisited[course] = true;
-        courseStack[course] = true;
-        
-        for(Integer i: graph.get(course)) {
-            if(courseStack[i]) {
+    public boolean isCycle(HashMap<Integer, List<Integer>> map, int i, boolean[] currVisited, boolean[] isVisited) {
+        if(currVisited[i])  return true;
+        if(isVisited[i] || map.get(i).size() == 0) {
+            return false;
+        }
+
+        currVisited[i] = true;
+        for(int j: map.get(i)) {
+            if(isCycle(map, j, Arrays.copyOf(currVisited, currVisited.length), isVisited)) {
                 return true;
             }
-            if(!isVisited[i]) {
-                if(isCycle(graph, isVisited, i, courseStack)) {
-                    return true;
-                }
-            }
-            isVisited[i] = true;
+            isVisited[j] = true;
         }
-        courseStack[course] = false;
+
         return false;
     }
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<List<Integer>> graph = new ArrayList<>();
-        for(int i=0; i<numCourses; i++) {
-            graph.add(new ArrayList<Integer>());
-        }
-        for(int[] course: prerequisites) {
-            graph.get(course[0]).add(course[1]);
-        }
         boolean[] isVisited = new boolean[numCourses];
-        boolean[] courseStack = new boolean[numCourses];
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
 
         for(int i=0; i<numCourses; i++) {
-            if(!isVisited[i]) {
-                if(isCycle(graph, isVisited, i, courseStack)) {
-                    return false;
-                }
+            map.put(i, new ArrayList<>());
+        }
+
+        for(int[] course: prerequisites) {
+            map.get(course[0]).add(course[1]);
+        }
+
+        for(int i=0; i<numCourses; i++) {
+            if(isVisited[i])    continue;
+            if(isCycle(map, i, new boolean[numCourses], isVisited)) {
+                return false;
             }
             isVisited[i] = true;
         }
+
         return true;
     }
 }
