@@ -2,7 +2,7 @@ class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
         int n = temperatures.length;
         int[] waitTime = new int[n];
-        var max = new ArrayDeque<Integer>();
+        Deque<Integer> max = new ArrayDeque<Integer>();
 
         for(int i=0; i<n; i++) {
             while(!max.isEmpty() && temperatures[max.peek()] < temperatures[i]) {
