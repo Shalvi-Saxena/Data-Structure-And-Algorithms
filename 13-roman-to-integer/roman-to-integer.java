@@ -1,32 +1,26 @@
 class Solution {
     public int romanToInt(String s) {
-        if(s.length() == 0)   return 0;
+        int[] roman = new int[26];
+        roman['I' - 'A'] = 1;
+        roman['V' - 'A'] = 5;
+        roman['X' - 'A'] = 10;
+        roman['L' - 'A'] = 50;
+        roman['C' - 'A'] = 100;
+        roman['D' - 'A'] = 500;
+        roman['M' - 'A'] = 1000;
 
-        HashMap<Character, Integer> keys = new HashMap<>();
-        keys.put('I', 1);
-        keys.put('V', 5);
-        keys.put('X', 10);
-        keys.put('L', 50);
-        keys.put('C', 100);
-        keys.put('D', 500);
-        keys.put('M', 1000);
+        int total = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int curr = roman[s.charAt(i) - 'A'];
+            int next = (i + 1 < s.length()) ? roman[s.charAt(i + 1) - 'A'] : 0;
 
-        char[] arr = s.toCharArray();
-        int val = 0;
-
-        for(int i=arr.length-1; i>=0; i--) {
-            val += keys.get(arr[i]);
-            int j = keys.get(arr[i]);
-
-            while(i>0 && keys.get(arr[i-1]) < j) {
-                val -= keys.get(arr[i-1]);
-                i--;
+            if (curr < next) {
+                total -= curr;
+            } else {
+                total += curr;
             }
-
-            // System.out.println("val = "+val+" i = "+i+" j ="+j);
-            
         }
 
-        return val;
+        return total;
     }
 }
