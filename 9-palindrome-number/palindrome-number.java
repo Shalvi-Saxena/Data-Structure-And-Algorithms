@@ -6,8 +6,8 @@ class Solution {
         int rev = 0;
 
         while(rev < x) {
-            rev *= 10;
-            rev += (x%10);
+            int digit = x % 10;
+            rev = rev * 10 + digit;
             x /= 10;
         }
 
