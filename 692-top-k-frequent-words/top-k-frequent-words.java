@@ -7,18 +7,17 @@ class Solution {
         }
 
         PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<>(
-            (a,b) -> a.getValue().equals(b.getValue())? b.getKey().compareTo(a.getKey()) : a.getValue()-b.getValue()
+            (a,b) -> a.getValue().equals(b.getValue())? a.getKey().compareTo(b.getKey()) : b.getValue()-a.getValue()
         );
         
         for (Map.Entry<String, Integer> entry : dict.entrySet()) {
             pq.offer(entry);
-            if(pq.size()>k)
-                pq.poll();
         }
 
-        List<String> res = new LinkedList<>();
-        while(!pq.isEmpty()) {
-            res.add(0, pq.poll().getKey());
+        List<String> res = new ArrayList<>();
+
+        for(int i=0; i<k; i++) {
+            res.add(pq.poll().getKey());
         }
 
         return res;
