@@ -16,7 +16,7 @@
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
         Queue<Pair> level = new LinkedList<>();
-        level.add(new Pair(root, 1));
+        level.add(new Pair(root, 0));
         int max = 0, start=0, end=0;
         
         while(!level.isEmpty()) {
