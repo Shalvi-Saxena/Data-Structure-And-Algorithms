@@ -15,7 +15,7 @@
  */
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
-        Queue<Pair<TreeNode, Integer>> level = new LinkedList<>();
+        Queue<Pair> level = new LinkedList<>();
         level.add(new Pair(root, 1));
         int max = 0, start=0, end=0;
         
@@ -23,8 +23,8 @@ class Solution {
             int size=level.size();
             for(int i=0; i<size; i++) {
                 Pair item = level.poll();
-                TreeNode node = (TreeNode) item.getKey();
-                Integer ind = (Integer) item.getValue();
+                TreeNode node = item.node;
+                Integer ind = item.ind;
 
                 if(i==0) {
                     start = ind;
@@ -44,5 +44,15 @@ class Solution {
             max = Math.max(max, end-start+1);
         }
         return max;
+    }
+
+    class Pair {
+        TreeNode node;
+        Integer ind;
+
+        Pair(TreeNode node, Integer ind) {
+            this.node = node;
+            this.ind = ind;
+        }
     }
 }
