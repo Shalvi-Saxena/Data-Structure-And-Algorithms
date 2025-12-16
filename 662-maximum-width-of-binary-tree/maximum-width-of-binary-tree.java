@@ -15,39 +15,32 @@
  */
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
-        Queue<TreeNode> level = new LinkedList<>();
-        HashMap<TreeNode, Integer> map = new HashMap<>();
-
-        level.add(root);
-        map.put(root, 1);
-
-        int max = level.size(), start=0, end=0;
+        Queue<Pair<TreeNode, Integer>> level = new LinkedList<>();
+        level.add(new Pair(root, 1));
+        int max = 0, start=0, end=0;
         
         while(!level.isEmpty()) {
-            
-            Queue<TreeNode> nextLevel = new LinkedList<>();
             int size=level.size();
-            
             for(int i=0; i<size; i++) {
-                TreeNode node = level.poll();
+                Pair item = level.poll();
+                TreeNode node = (TreeNode) item.getKey();
+                Integer ind = (Integer) item.getValue();
+
                 if(i==0) {
-                    start = map.get(node);
+                    start = ind;
                 }
                 if(i==size-1) {
-                    end = map.get(node);
+                    end = ind;
                 }
 
                 if(node.left != null) {
-                    nextLevel.add(node.left);
-                    map.put(node.left, map.get(node)*2);
+                    level.add(new Pair(node.left, ind*2));
                 }
                 if(node.right != null) {
-                    nextLevel.add(node.right);
-                    map.put(node.right, map.get(node)*2 + 1);
+                    level.add(new Pair(node.right, ind*2 + 1));
                 } 
             }
             
-            level = nextLevel;
             max = Math.max(max, end-start+1);
         }
         return max;
