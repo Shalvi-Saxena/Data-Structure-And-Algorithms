@@ -24,39 +24,24 @@ class WordDictionary {
         }
         root.isEOW = true;
     }
-    
+
     public boolean search(String word) {
-        List<TrieNode> bfs = new LinkedList<>();
-        bfs.add(dict);
-
-        for(char ch: word.toCharArray()) {
-            
-            if(bfs.isEmpty()) {
-                return false;
-            }
-            
-            int s = bfs.size();
-
-            for(int i=0; i<s && !bfs.isEmpty(); i++) {
-
-                TrieNode root = bfs.removeFirst();
-                
-                if(ch == '.') {
-                    for(int j=0; j<26; j++) {
-                        if(root.node[j] != null) {
-                            bfs.add(root.node[j]);
-                        }
-                    }
-                } else if(root.node[ch-'a'] != null) {
-                    bfs.add(root.node[ch-'a']);
-                }
-            }
+        return dfs(word.toCharArray(), 0, dict);
+    }
+    
+    public boolean dfs(char[] word, int i, TrieNode root) {
+        if(i == word.length) {
+            return root == null? false: root.isEOW;
         }
 
-        while(!bfs.isEmpty()) {
-            if(bfs.removeFirst().isEOW) {
-                return true;
+        if(word[i] == '.') {
+            for(int j=0; j<26; j++) {
+                if(root.node[j] != null && dfs(word, i+1, root.node[j])) {
+                    return true;
+                }
             }
+        } else if(root.node[word[i]-'a'] != null) {
+            return dfs(word, i+1, root.node[word[i]-'a']);
         }
 
         return false;
