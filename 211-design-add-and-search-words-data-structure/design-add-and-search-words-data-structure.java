@@ -17,11 +17,10 @@ class WordDictionary {
     public void addWord(String word) {
         TrieNode root = dict;
         for(char ch: word.toCharArray()) {
-            int i = ch-'a';
-            if(root.node[i] == null) {
-                root.node[i] = new TrieNode();
+            if(root.node[ch-'a'] == null) {
+                root.node[ch-'a'] = new TrieNode();
             }
-            root = root.node[i];
+            root = root.node[ch-'a'];
         }
         root.isEOW = true;
     }
@@ -37,18 +36,19 @@ class WordDictionary {
             }
             
             int s = bfs.size();
-            int item = ch-'a';
 
             for(int i=0; i<s && !bfs.isEmpty(); i++) {
+
                 TrieNode root = bfs.removeFirst();
+                
                 if(ch == '.') {
                     for(int j=0; j<26; j++) {
                         if(root.node[j] != null) {
                             bfs.add(root.node[j]);
                         }
                     }
-                } else if(root.node[item] != null) {
-                    bfs.add(root.node[item]);
+                } else if(root.node[ch-'a'] != null) {
+                    bfs.add(root.node[ch-'a']);
                 }
             }
         }
