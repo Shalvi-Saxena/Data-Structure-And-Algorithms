@@ -8,13 +8,12 @@ class Solution {
 
         int max = 0;
 
-        for(int i=0; i<nums.length; i++) {
-            int j = nums[i], tempCount = 1;
-            if(set.contains(j-1)) {
+        for(int num: set) {
+            if(set.contains(num-1)) {
                 continue;
             }
+            int j = num, tempCount = 1;
             while(set.contains(j+1)) {
-                set.remove(j);
                 j++;
                 tempCount++;
             }
