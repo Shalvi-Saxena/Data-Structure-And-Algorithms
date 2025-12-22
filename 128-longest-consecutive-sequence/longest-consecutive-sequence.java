@@ -7,7 +7,6 @@ class Solution {
         }
 
         int max = 0;
-
         for(int num: set) {
             if(set.contains(num-1)) {
                 continue;
