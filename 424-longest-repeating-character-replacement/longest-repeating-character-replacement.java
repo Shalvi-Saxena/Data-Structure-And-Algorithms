@@ -5,8 +5,9 @@ class Solution {
         int max = 0, len = 0;
 
         for(int i=0, j=0; i<arr.length; i++) {
-            freq[arr[i]-'A']++;
-            max = Math.max(max, freq[arr[i]-'A']);
+            int idx = arr[i]-'A';
+            freq[idx]++;
+            max = Math.max(max, freq[idx]);
 
             if((i-j+1 - max) > k) {
                 freq[arr[j]-'A']--;
