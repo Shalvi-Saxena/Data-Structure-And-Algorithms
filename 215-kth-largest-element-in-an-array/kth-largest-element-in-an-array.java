@@ -6,10 +6,8 @@ class Solution {
     }
 
     public int partition(int[] nums, int i, int j) {
-        int mid = i+ (j-i)/2;
-        int right = nums[mid];
+        int right = nums[j];
         int left = i;
-        swap(nums, mid, j);
         for(int k=i; k<j; k++) {
             if(nums[k] > right) {
                 swap(nums, left, k);
