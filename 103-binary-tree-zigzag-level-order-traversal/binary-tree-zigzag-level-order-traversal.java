@@ -27,24 +27,21 @@ class Solution {
     }
 
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        if(root == null) {
-            return new ArrayList<>();
-        }
         List<List<Integer>> seq = new ArrayList<>();
+        
+        if(root == null)    return seq;
+        
+        boolean flag = true;
         List<TreeNode> level = new ArrayList<>();
         level.add(root);
-        boolean flag = true;
 
         while(!level.isEmpty()) {
             seq.add(getLevelVal(level, flag));
+
             List<TreeNode> newLevel = new ArrayList<>();
-            for(int i=0; i<level.size(); i++) {
-                if(level.get(i).left != null) {
-                    newLevel.add(level.get(i).left);
-                }
-                if(level.get(i).right != null) {
-                    newLevel.add(level.get(i).right);
-                }
+            for(TreeNode node: level) {
+                if(node.left != null)   newLevel.add(node.left);
+                if(node.right != null)  newLevel.add(node.right);
             }
             level = newLevel;
             flag = !flag;
