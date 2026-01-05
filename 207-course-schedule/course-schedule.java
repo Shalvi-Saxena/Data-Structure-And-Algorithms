@@ -1,18 +1,20 @@
 class Solution {
-    public boolean isCycle(HashMap<Integer, List<Integer>> map, int i, boolean[] currVisited, boolean[] isVisited) {
-        if(currVisited[i])  return true;
-        if(isVisited[i] || map.get(i).size() == 0) {
+    public boolean isCycle(int i, boolean[] isVisited, 
+            HashMap<Integer, List<Integer>> map, HashSet<Integer> set) {
+        if(set.contains(i)) {
+            return true;
+        }
+        if(isVisited[i] || !map.containsKey(i)) {
             return false;
         }
-
-        currVisited[i] = true;
-        for(int j: map.get(i)) {
-            if(isCycle(map, j, Arrays.copyOf(currVisited, currVisited.length), isVisited)) {
+        set.add(i);
+        for(Integer j: map.get(i)) {
+            if(isCycle(j, isVisited, map, set)) {
                 return true;
             }
-            isVisited[j] = true;
         }
-
+        isVisited[i] = true;
+        set.remove(i);
         return false;
     }
 
@@ -20,20 +22,18 @@ class Solution {
         boolean[] isVisited = new boolean[numCourses];
         HashMap<Integer, List<Integer>> map = new HashMap<>();
 
-        for(int i=0; i<numCourses; i++) {
-            map.put(i, new ArrayList<>());
-        }
-
         for(int[] course: prerequisites) {
+            if (!map.containsKey(course[0])) {
+                map.put(course[0], new ArrayList<>());
+            }
             map.get(course[0]).add(course[1]);
         }
 
         for(int i=0; i<numCourses; i++) {
-            if(isVisited[i])    continue;
-            if(isCycle(map, i, new boolean[numCourses], isVisited)) {
+            if(!isVisited[i] 
+                && isCycle(i, isVisited, map, new HashSet<>())) {
                 return false;
             }
-            isVisited[i] = true;
         }
 
         return true;
