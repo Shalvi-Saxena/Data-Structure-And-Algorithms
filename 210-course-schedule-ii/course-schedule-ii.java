@@ -1,54 +1,48 @@
 class Solution {
-    List<Integer> result = new ArrayList<>();
-    boolean[] visited;
-    boolean[] onPath;
-    boolean hasCycle = false;
+    public boolean isCycle(int i, List<Integer> seq, 
+        HashMap<Integer, List<Integer>> map, List<Integer> set) {
+        if(seq.contains(i))     return false;
+        if(set.contains(i))     return true;
+        set.add(i);
+
+        for(Integer j: map.get(i)) {
+            if(isCycle(j, seq, map, set))   return true;
+        }
+        set.remove(new Integer(i));
+        seq.add(i);
+        return false;
+    }
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        List<Integer>[] graph = new ArrayList[numCourses];
-
-        for (int i = 0; i < numCourses; i++) {
-            graph[i] = new ArrayList<>();
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        
+        for(int i=0; i<numCourses; i++) {
+            map.put(i, new ArrayList<>());
+        }
+        for(int[] course: prerequisites) {
+            map.get(course[0]).add(course[1]);
         }
 
-        for (int[] p : prerequisites) {
-            graph[p[1]].add(p[0]);
-        }
+        List<Integer> seq = new ArrayList<>();
 
-        visited = new boolean[numCourses];
-        onPath = new boolean[numCourses];
-
-        for (int i = 0; i < numCourses && !hasCycle; i++) {
-            if (!visited[i]) {
-                dfs(i, graph);
+        for (Integer i : map.keySet()) {
+            if(!seq.contains(i) && isCycle(i, seq, map, new ArrayList<>())) {
+                return new int[0];
             }
         }
 
-        if (hasCycle) return new int[0];
-
-        int[] order = new int[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            order[i] = result.get(numCourses - 1 - i);
+        int i=0;
+        int[] res = new int[numCourses];
+        for(int j: seq) {
+            res[i++] = j;
         }
 
-        return order;
-    }
-
-    private void dfs(int node, List<Integer>[] graph) {
-        if (onPath[node]) {
-            hasCycle = true;
-            return;
-        }
-        if (visited[node] || hasCycle) return;
-
-        onPath[node] = true;
-
-        for (int next : graph[node]) {
-            dfs(next, graph);
+        for(int j=0; j<numCourses; j++) {
+            if(!seq.contains(j)) {
+                res[i++] = j;
+            }
         }
 
-        onPath[node] = false;
-        visited[node] = true;
-        result.add(node);
+        return res;
     }
 }
