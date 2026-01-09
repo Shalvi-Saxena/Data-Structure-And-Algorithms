@@ -1,15 +1,15 @@
 class Solution {
     int sum;
-    ArrayList<Integer> prob;
+    int[] prob;
     Random rand;
 
     public Solution(int[] w) {
-        prob = new ArrayList<>();
+        prob = new int[w.length];
         sum = 0;
        
-        for(int j: w) {
-            sum += j;
-            prob.add(sum);
+        for(int i=0; i<w.length; i++) {
+            sum += w[i];
+            prob[i] = sum;
         }
 
         rand = new Random();
@@ -17,11 +17,11 @@ class Solution {
     
     public int pickIndex() {
         int i = rand.nextInt(sum)+1;
-        int low = 0, high = prob.size()-1;
+        int low = 0, high = prob.length-1;
 
         while(low<high) {
             int mid = low + ((high-low)/2);
-            if(prob.get(mid) < i)
+            if(prob[mid] < i)
                 low = mid+1;
             else
                 high = mid;
