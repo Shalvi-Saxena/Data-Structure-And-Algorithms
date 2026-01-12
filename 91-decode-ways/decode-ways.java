@@ -1,26 +1,24 @@
 class Solution {
-    int n;
-    int[] memo;
-    public int decodeWays(char[] str, int i) {
-        if(i == n)  return 1;
-        if(str[i] == '0')   return 0;
-        if(memo[i] != 0) return memo[i];
+    public int numDecodings(String s) {
+       if(s.charAt(0)=='0'){
+            return 0;
+        }
+        int n=s.length();  
+        int[] dp=new int[n+1];
+        dp[0]=1;
+        dp[1]=1;
 
-        int ways = decodeWays(str, i+1);
-        if(i<n-1) {
-            int num = (str[i] - '0') * 10 + (str[i + 1] - '0');
-            if (num <= 26) {
-                ways += decodeWays(str, i + 2);
+        for(int i=2;i<n+1;i++){
+            if(s.charAt(i-1)!='0'){
+                dp[i]+=dp[i-1];
+            }
+
+            int twoDigits=Integer.parseInt(s.substring(i-2,i));
+            if(twoDigits>=10 && twoDigits<=26){
+                dp[i]+=dp[i-2];
             }
         }
 
-        memo[i] = ways; 
-
-        return ways;
-    }
-    public int numDecodings(String s) {
-        n = s.length();
-        memo = new int[n];
-        return decodeWays(s.toCharArray(), 0);
+        return dp[n];
     }
 }
