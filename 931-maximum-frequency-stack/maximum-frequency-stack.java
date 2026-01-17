@@ -1,38 +1,35 @@
 class FreqStack {
 
-    class Node {
-        int freq, ind, val;
-        Node(int freq, int ind, int val) {
-            this.freq = freq;
-            this.ind = ind;
-            this.val = val;
-        }
-    }
-
-    HashMap<Integer, Integer> map;
-    PriorityQueue<Node> stack;
-    int ind;
+    HashMap<Integer, Integer> freq;
+    HashMap<Integer, Deque<Integer>> list;
+    int maxFreq;
 
     public FreqStack() {
-        map = new HashMap<>();
-        stack = new PriorityQueue<>((a,b)-> {
-            if(a.freq == b.freq) {
-                return Integer.compare(b.ind, a.ind);
-            }
-            return Integer.compare(b.freq, a.freq);
-        });
-        ind = 0;
+        maxFreq = 0;
+        freq = new HashMap<>();
+        list = new HashMap<>();
     }
     
     public void push(int val) {
-        int freq = map.getOrDefault(val, 0)+1;
-        map.put(val, freq);
-        stack.offer(new Node(freq, ind++, val));        
+        int currFreq = freq.getOrDefault(val, 0)+1;
+        maxFreq = Math.max(maxFreq, currFreq);
+        freq.put(val, currFreq);
+
+        if(!list.containsKey(currFreq)) {
+            list.put(currFreq, new ArrayDeque<>());
+        }
+        list.get(currFreq).addLast(val);
     }
     
     public int pop() {
-        int val = stack.poll().val;
-        map.put(val, map.get(val)-1);
+        Deque<Integer> currList = list.get(maxFreq);
+        int val = currList.removeLast();
+        freq.put(val, maxFreq-1);
+        
+        if(currList.isEmpty()) {
+            maxFreq -= 1;
+        }
+
         return val;
     }
 }
