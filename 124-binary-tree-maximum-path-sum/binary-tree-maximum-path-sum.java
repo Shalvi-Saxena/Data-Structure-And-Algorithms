@@ -15,26 +15,20 @@
  */
 class Solution {
     int maxSum;
-    HashMap<TreeNode, Integer> map;
 
-    public void postOrder(TreeNode root) {
-        if(root == null)    return;
-        postOrder(root.left);
-        postOrder(root.right);
-
-        int max = Math.max(map.get(root.left), map.get(root.right));
-        map.put(root, Math.max(max+root.val, root.val));
-
-        max = Math.max(max, map.get(root.left)+map.get(root.right))+root.val;
-        max = Math.max(max, root.val);
+    public int postOrder(TreeNode root) {
+        if(root == null)    return 0;
         
-        maxSum = Math.max(max, maxSum);
+        int left = Math.max(0, postOrder(root.left));
+        int right = Math.max(0, postOrder(root.right));
+
+        maxSum = Math.max(maxSum, left+right+root.val);
+        
+        return root.val + Math.max(left, right);
     }
 
     public int maxPathSum(TreeNode root) {
         maxSum = Integer.MIN_VALUE;
-        map = new HashMap<>();
-        map.put(null, 0);
         postOrder(root);
 
         return maxSum;
