@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    int maxSum;
+    int maxSum = Integer.MIN_VALUE;
 
     public int postOrder(TreeNode root) {
         if(root == null)    return 0;
@@ -23,14 +23,11 @@ class Solution {
         int right = Math.max(0, postOrder(root.right));
 
         maxSum = Math.max(maxSum, left+right+root.val);
-        
         return root.val + Math.max(left, right);
     }
 
     public int maxPathSum(TreeNode root) {
-        maxSum = Integer.MIN_VALUE;
         postOrder(root);
-
         return maxSum;
     }
 }
