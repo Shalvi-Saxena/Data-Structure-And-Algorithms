@@ -1,20 +1,18 @@
 class Solution {
     public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if(k==0)    return 0;
+
         int left=0, count = 0;
-        int[] prod = new int[nums.length];
-        Arrays.fill(prod, 1);
+        long currProd = 1;
 
         for(int i=0; i<nums.length; i++) {
+            currProd *= nums[i];
             
-            for(int j=i; j>=left; j--) {
-                
-                if(prod[j]*nums[i] >= k) {
-                    left = j+1;
-                    break;
-                }
-                prod[j] *= nums[i];
-                count++;
+            while(currProd >= k && left<=i) {
+                currProd /= nums[left++];
             }
+
+            count += Math.max(0, i-left+1);
         }
 
         return count;
