@@ -1,6 +1,6 @@
 class Solution {
     public int numSubarrayProductLessThanK(int[] nums, int k) {
-        if(k==0)    return 0;
+        if(k<=1)    return 0;
 
         int left=0, count = 0;
         long currProd = 1;
