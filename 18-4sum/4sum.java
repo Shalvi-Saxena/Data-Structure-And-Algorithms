@@ -8,15 +8,15 @@ class Solution {
         int l=0, r=nums.length-1;
 
         for(; l<nums.length; l++) {
-            for(r = nums.length-1; r>l; r--) {
+            for(r = l+1; r<nums.length; r++) {
 
                 long sum = nums[l]+nums[r];
-                int iL = l+1, iR = r-1;
+                int iL = r+1, iR = nums.length-1;
 
                 while(iL < iR) {
                     long currSum = sum+nums[iL]+nums[iR];
                     if(currSum == target) {
-                        String key = nums[l]+"_"+nums[iL]+"_"+nums[iR]+"_"+nums[r];
+                        String key = nums[l]+"_"+nums[r]+"_"+nums[iL]+"_"+nums[iR];
                         if(!keys.contains(key)) {
                             arr.add(Arrays.asList(nums[l], nums[iL], nums[iR], nums[r]));
                             keys.add(key);
