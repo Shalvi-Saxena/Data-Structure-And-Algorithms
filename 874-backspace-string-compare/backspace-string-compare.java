@@ -1,31 +1,18 @@
 class Solution {
-    public boolean backspaceCompare(String s, String t) {
-        char[] sArr = s.toCharArray();
-        char[] tArr = t.toCharArray();
-
-        Stack<Character> sSt = new Stack<>();
-        Stack<Character> tSt = new Stack<>();
-        
-        for(char ch: sArr) {
+    private String getString(String s) {
+        StringBuilder str = new StringBuilder();
+        for(char ch: s.toCharArray()) {
             if(ch == '#') {
-                if(!sSt.isEmpty())  sSt.pop();
+                if (str.length() > 0)  
+                    str.deleteCharAt(str.length() - 1);
             } else {
-                sSt.push(ch);
+                str.append(ch);
             }
         }
+        return str.toString();
+    }
 
-        for(char ch: tArr) {
-            if(ch == '#') {
-                if(!tSt.isEmpty())  tSt.pop();
-            } else {
-                tSt.push(ch);
-            }
-        }
-
-        while(!sSt.isEmpty() && !tSt.isEmpty()) {
-            if(sSt.pop() != tSt.pop())    return false;
-        }
-
-        return sSt.isEmpty() && tSt.isEmpty();
+    public boolean backspaceCompare(String s, String t) {    
+        return getString(s).equals(getString(t));
     }
 }
