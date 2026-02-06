@@ -12,7 +12,7 @@ class Solution {
                 currProd /= nums[left++];
             }
 
-            count += Math.max(0, i-left+1);
+            count += i-left+1;
         }
 
         return count;
