@@ -9,35 +9,35 @@
  * }
  */
 class Solution {
-    ListNode curr;
-    boolean stop;
-
-    public void reOrder(ListNode head) {
-        if(head == null)   return;
-        reOrder(head.next);
-        if(stop)    return;
-        
-        if(curr == head) {
-            stop = true;
-            curr.next = null;
-            return;
-        }
-
-        if(curr.next == head) {
-            stop = true;
-            head.next = null;
-            return;
-        }
-
-        ListNode next = curr.next;
-        curr.next = head;
-        head.next = next;
-        curr = next;
-    }
-
     public void reorderList(ListNode head) {
-        curr = head;
-        stop = false;
-        reOrder(head);
+        
+        if(head.next == null || head.next.next == null) {
+            return;
+        }
+
+        Stack<ListNode> st = new Stack<>();
+        ListNode slow = head, fast = head, last = null;
+        
+        while(fast != null && fast.next != null) {
+            st.push(slow);
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        head = null;
+        if(fast != null) {
+            head = slow;
+            slow = slow.next;
+            head.next = null;
+        }
+
+        while(!st.isEmpty()) {
+            ListNode first = st.pop();
+            first.next = slow;
+            slow = slow.next;
+ 
+            first.next.next = head;
+            head = first;
+        }
     }
 }
