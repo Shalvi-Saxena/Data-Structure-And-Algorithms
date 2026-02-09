@@ -9,21 +9,15 @@ class Solution {
 
         for(int i=0, left = 0; i<fruits.length; i++) {
             map.put(fruits[i], map.getOrDefault(fruits[i], 0)+1);
-            count++;
 
-            if(map.size() > 2) {
-                while(map.size() > 2) {
-                    int fruit = fruits[left];
-                    map.put(fruit, map.get(fruit)-1);
-                    count--;
-                    if(map.get(fruit) == 0) {
-                        map.remove(fruit);
-                    }
-                    left++;
-                }
+            while(map.size() > 2) {
+                int fruit = fruits[left];
+                map.put(fruit, map.get(fruit)-1);
+                if(map.get(fruit) == 0)     map.remove(fruit);
+                left++;
             }
 
-            maxCount = Math.max(maxCount, count);
+            maxCount = Math.max(maxCount, i-left+1);
         }
 
         return maxCount;
