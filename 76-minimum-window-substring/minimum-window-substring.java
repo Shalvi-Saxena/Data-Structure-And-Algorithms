@@ -1,40 +1,33 @@
 class Solution {
     public String minWindow(String s, String t) {
-        if (s.length() < t.length()) return "";
-
-        HashMap<Character, Integer> required = new HashMap<>();
-        HashMap<Character, Integer> window = new HashMap<>();
-
-        for (char c : t.toCharArray()) {
-            required.put(c, required.getOrDefault(c, 0) + 1);
+        int[] arr1 = new int[255];
+        int[] arr2 = new int[255];
+        
+        for(char ch: t.toCharArray()) {
+            arr1[ch]++;
         }
 
-        int have = 0, need = required.size();
-        int left = 0, minLen = Integer.MAX_VALUE, start = 0;
+        char[] str = s.toCharArray();
+        int len = 0, minLen = Integer.MAX_VALUE, min = 0;
 
-        for (int right = 0; right < s.length(); right++) {
-            char c = s.charAt(right);
-            window.put(c, window.getOrDefault(c, 0) + 1);
+        for(int left=0, i=0; i<str.length; i++) {
+            int ind = str[i];
+            arr2[ind]++;
 
-            if (required.containsKey(c) && window.get(c).intValue() == required.get(c).intValue()) {
-                have++;
-            }
+            if(arr2[ind] <= arr1[ind])  len++;
 
-            while (have == need) {
-                if (right - left + 1 < minLen) {
-                    minLen = right - left + 1;
-                    start = left;
+            while(len == t.length()) {
+                if((i-left+1) < minLen) {
+                    minLen = i-left+1;
+                    min = left;
                 }
 
-                char leftChar = s.charAt(left);
-                window.put(leftChar, window.get(leftChar) - 1);
-                if (required.containsKey(leftChar) && window.get(leftChar) < required.get(leftChar)) {
-                    have--;
-                }
-                left++;
+                int leftInd = str[left++];
+                if(arr2[leftInd] <= arr1[leftInd])  len--;
+                arr2[leftInd]--;
             }
         }
 
-        return minLen == Integer.MAX_VALUE ? "" : s.substring(start, start + minLen);
+        return minLen == Integer.MAX_VALUE? "": s.substring(min, min+minLen);
     }
 }
