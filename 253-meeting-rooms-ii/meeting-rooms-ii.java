@@ -2,28 +2,29 @@ class Solution {
     public int minMeetingRooms(int[][] intervals) {
         if(intervals.length <= 1)   return intervals.length;
 
-        int[][] s = new int[intervals.length*2][2];
+        int[] s = new int[intervals.length];
+        int[] e = new int[intervals.length];
         int i=0;
 
         for(int[] meet: intervals) {
-            s[i++] = new int[]{meet[0], 1};
-            s[i++] = new int[]{meet[1], -1};
+            s[i] = meet[0];
+            e[i++] = meet[1];
         }
 
-        Arrays.sort(s, (a, b) -> {
-            if (a[0] == b[0]) {
-                return a[1] - b[1];
+        Arrays.sort(s);
+        Arrays.sort(e);
+
+        int rooms=0;
+        i=0;
+
+        for(int st: s) {
+            if(st >= e[i]) {
+                rooms--;
+                i++;
             }
-            return a[0] - b[0];
-        });
-
-        int rooms=0, max=0;
-
-        for(int[] st: s) {
-            rooms += st[1];
-            max = Math.max(max, rooms);
+            rooms++;
         }
 
-        return max;
+        return rooms;
     }
 }
