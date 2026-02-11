@@ -21,17 +21,16 @@ class Solution {
         }
 
         List<Interval> res = new ArrayList<>();
-        Interval temp = pq.poll();
+        Interval start = pq.poll();
 
         while(!pq.isEmpty()) {
-            if(pq.peek().start > temp.end) {
-                res.add(new Interval(temp.end, pq.peek().start));
-                temp = pq.poll();
-            } else if(pq.peek().end > temp.end) {
-                temp = pq.poll();
-            } else {
-                pq.poll();
-            }
+            Interval temp = pq.poll();
+            if(temp.start > start.end) {
+                res.add(new Interval(start.end, temp.start));
+            } 
+            if(temp.end > start.end) {
+                start = temp;
+            } 
         }
 
         return res;
