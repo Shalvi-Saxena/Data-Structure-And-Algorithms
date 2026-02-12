@@ -3,7 +3,7 @@ class Solution {
         Stack<Integer> st = new Stack<>();
 
         for(int i=nums.length-1; i>=0; i--) {
-            while(!st.isEmpty() && st.peek() < nums[i]) {
+            while(!st.isEmpty() && st.peek() <= nums[i]) {
                 st.pop();
             }
             st.push(nums[i]);
