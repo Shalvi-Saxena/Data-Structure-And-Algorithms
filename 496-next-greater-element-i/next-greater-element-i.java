@@ -11,15 +11,16 @@ class Solution {
         int[] res = new int[nums1.length];
         
         for(int i=n2-1; i>=0; i--) {
-            while(!st.isEmpty() && st.peek()<nums2[i]) {
+            int key = nums2[i];
+            while(!st.isEmpty() && st.peek()< key) {
                 st.pop();
             }
 
-            if(map.containsKey(nums2[i])) {
-                res[map.get(nums2[i])] = st.isEmpty()? -1: st.peek();
+            if(map.containsKey(key)) {
+                res[map.get(key)] = st.isEmpty()? -1: st.peek();
             }
 
-            st.push(nums2[i]);
+            st.push(key);
         }
 
         return res;
