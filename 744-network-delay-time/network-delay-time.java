@@ -33,9 +33,10 @@ class Solution {
         int totalTime = Integer.MIN_VALUE;
 
         for(int i=1; i<=n; i++) {
+            if(minTime[i] == Integer.MAX_VALUE) return -1;
             totalTime = Math.max(totalTime, minTime[i]);
         }
 
-        return totalTime == Integer.MAX_VALUE? -1: totalTime;
+        return totalTime;
     }
 }
