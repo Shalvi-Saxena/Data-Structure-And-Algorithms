@@ -19,6 +19,9 @@ class Solution {
 
         while(!q.isEmpty()) {
             int[] node = q.poll();
+            
+            if(node[1] > minTime[node[0]])    continue;
+
             List<int[]> edges = graph.get(node[0]);
             for(int[] edge: edges) {
                 int arrTime = minTime[node[0]]+edge[1];
