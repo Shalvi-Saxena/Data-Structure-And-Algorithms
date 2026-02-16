@@ -14,17 +14,17 @@ class Solution {
         Arrays.fill(minTime, Integer.MAX_VALUE);
         minTime[k] = 0;
         
-        Deque<Integer> q = new ArrayDeque<>();
-        q.add(k);
+        PriorityQueue<int[]> q = new PriorityQueue<>((a,b)-> a[1]-b[1]);
+        q.add(new int[]{k, 0});
 
         while(!q.isEmpty()) {
-            int node = q.removeFirst();
-            List<int[]> edges = graph.get(node);
+            int[] node = q.poll();
+            List<int[]> edges = graph.get(node[0]);
             for(int[] edge: edges) {
-                int arrTime = minTime[node]+edge[1];
+                int arrTime = minTime[node[0]]+edge[1];
                 if(arrTime < minTime[edge[0]]) {
                     minTime[edge[0]] = arrTime;
-                    q.add(edge[0]);
+                    q.add(new int[]{edge[0], arrTime});
                 }
             }
 
