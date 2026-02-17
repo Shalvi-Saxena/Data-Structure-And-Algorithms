@@ -14,20 +14,18 @@
  * }
  */
 class Solution {
-    HashSet<Long> list;
+    List<Long> list;
     public long DFS(TreeNode root, int currSum) {
         if(root == null)    return 0;
         
         long lSum = root.left != null? DFS(root.left, currSum): 0;
         long rSum = root.right != null? DFS(root.right, currSum): 0;
 
-        // list.add(lSum+root.val);
-        // list.add(rSum+root.val);
         list.add(lSum+rSum+root.val);
         return lSum+rSum+root.val;
     }
     public int maxProduct(TreeNode root) {
-        list = new HashSet<>();
+        list = new ArrayList<>();
         long tSum = DFS(root, 0); 
         long mod = 1000000007;
         long maxProd = 0;
