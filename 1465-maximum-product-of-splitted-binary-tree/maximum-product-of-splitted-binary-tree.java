@@ -14,26 +14,27 @@
  * }
  */
 class Solution {
-    Deque<Long> list;
+    long max = 0;
     public long DFS(TreeNode root) {
         if(root == null)    return 0;
-        
-        long sum = DFS(root.left) + DFS(root.right) + root.val;
-        list.add(sum);
+        return DFS(root.left) + DFS(root.right) + root.val;
+    }
+
+    public long findMax(TreeNode root, long tSum) {
+        if(root == null)    return 0;
+
+        long sum = findMax(root.left, tSum) + findMax(root.right, tSum) + root.val;
+        long diff = tSum-sum;
+        max = Math.max(max, diff*sum);
+
         return sum;
     }
+
     public int maxProduct(TreeNode root) {
-        list = new ArrayDeque<>();
         long tSum = DFS(root); 
         long mod = 1000000007;
-        long maxProd = 0;
+        long maxProd = findMax(root, tSum);
 
-        for(Long s1: list) {
-            long s2 = tSum - s1;
-
-            maxProd = Math.max(s1*s2, maxProd);
-        }
-
-        return (int)(maxProd % mod);
+        return (int)(max % mod);
     }
 }
