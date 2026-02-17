@@ -33,8 +33,7 @@ class Solution {
     public int maxProduct(TreeNode root) {
         long tSum = DFS(root); 
         long mod = 1000000007;
-        long maxProd = findMax(root, tSum);
-
+        findMax(root, tSum);
         return (int)(max % mod);
     }
 }
