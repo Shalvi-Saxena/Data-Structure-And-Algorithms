@@ -18,23 +18,22 @@ class Solution {
         if(root == null)    return 0;
 
         int maxSum = Integer.MIN_VALUE, minLevel = 0, level = 0;
-        List<TreeNode> q = new ArrayList<>();
+        Queue<TreeNode> q = new ArrayDeque<>();
         q.add(root);
 
         while(!q.isEmpty()) {
-            int sum = 0;
+            int sum = 0, s = q.size();
             level++;
-            List<TreeNode> nextQ = new ArrayList<>();
-            for(TreeNode n: q) {
+            while(s-- > 0) {
+                TreeNode n = q.poll();
                 sum += n.val;
-                if(n.left != null)  nextQ.add(n.left);
-                if(n.right != null)  nextQ.add(n.right);
+                if(n.left != null)  q.add(n.left);
+                if(n.right != null)  q.add(n.right);
             }
             if(sum > maxSum) {
                 maxSum = sum;
                 minLevel = level;
             }
-            q = nextQ;
         }
 
         return minLevel;
