@@ -11,7 +11,7 @@ class Solution {
         List<List<Node>> graph = new ArrayList<>();
         int MOD = 1000000007;
         long[] dist = new long[n];
-        long[] ways = new long[n];
+        int[] ways = new int[n];
         
         for(int i=0; i<n; i++) {
             graph.add(new ArrayList<>());
@@ -44,8 +44,7 @@ class Solution {
                     ways[dst.d] = ways[node.d];
                     q.add(new Node(dst.d, t));
                 } else if(t == dist[dst.d]) {
-                    ways[dst.d] += ways[node.d];
-                    ways[dst.d] %= MOD;
+                    ways[dst.d] = (ways[node.d]+ways[dst.d]) % MOD;
                 }
 
             }
