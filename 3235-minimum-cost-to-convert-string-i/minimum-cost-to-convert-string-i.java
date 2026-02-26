@@ -17,6 +17,7 @@ class Solution {
             for(int i=0; i<26; i++) {
                 if(min[i][k] == Integer.MAX_VALUE)    continue;
                 for(int j=0; j<26; j++) {
+                    if(i==j)    continue;
                     if(min[k][j] == Integer.MAX_VALUE)    continue;
                     min[i][j] = Math.min(min[i][k]+min[k][j], min[i][j]);
                 }
