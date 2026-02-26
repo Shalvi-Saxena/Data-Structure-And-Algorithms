@@ -25,10 +25,9 @@ class Solution {
         }
 
         long c = 0;
-        char[] src = source.toCharArray(), tar = target.toCharArray();
 
-        for(int i=0; i<src.length; i++) {
-            int s = src[i]-'a', t = tar[i]-'a';
+        for(int i=0; i<source.length(); i++) {
+            int s = source.charAt(i)-'a', t = target.charAt(i)-'a';
             if(min[s][t] == inf) {
                 return -1;
             }
