@@ -1,7 +1,7 @@
 class Solution {
     public long minimumCost(String source, String target, char[] original, char[] changed, int[] cost) {
-        long[][] min = new long[26][26];
-        long inf = Long.MAX_VALUE/2;
+        int[][] min = new int[26][26];
+        int inf = Integer.MAX_VALUE;
 
         for(int i=0; i<26; i++) {
             Arrays.fill(min[i], inf);
