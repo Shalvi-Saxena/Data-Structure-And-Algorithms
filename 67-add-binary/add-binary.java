@@ -9,9 +9,9 @@ class Solution {
             if(i >= 0) sum += a.charAt(i--) - '0';
             if(j >= 0) sum += b.charAt(j--) - '0';
             carry = sum > 1 ? 1 : 0;
-            res.insert(0, sum % 2);
+            res.append(sum % 2);
         }
-        if(carry != 0) res.insert(0, carry);
-        return res.toString();
+        if(carry != 0) res.append(carry);
+        return res.reverse().toString();
     }
 }
