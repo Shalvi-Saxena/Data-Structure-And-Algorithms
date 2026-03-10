@@ -1,53 +1,44 @@
 class Trie {
-
     class Node {
-        char val;
-        boolean end;
-        Node[] nextNode;
-        
-        private Node(char val, Node[] nextNode) {
-            this.val = val;
-            this.end = false;
-            this.nextNode = nextNode;
-        }
+        Node[] children = new Node[26];
+        boolean isEOW = false;
     }
+    
     Node root;
 
     public Trie() {
-        root = new Node('0', new Node[26]);
+        root = new Node();
     }
     
     public void insert(String word) {
-        Node tempRoot = root;
-        for(char item: word.toCharArray()) {
-            if(tempRoot.nextNode[item-'a'] != null) {
-                tempRoot = tempRoot.nextNode[item-'a'];
-            } else {
-                tempRoot.nextNode[item-'a'] = new Node(item, new Node[26]);
-                tempRoot = tempRoot.nextNode[item-'a'];
+        Node curr = root;
+        for(char c: word.toCharArray()) {
+            if(curr.children[c-'a'] == null) {
+                curr.children[c-'a'] = new Node();
             }
+            curr = curr.children[c-'a'];
         }
-        tempRoot.end = true;
+        curr.isEOW = true;
     }
     
     public boolean search(String word) {
-        Node tempRoot = root;
-        for(char item: word.toCharArray()) {
-            if(tempRoot.nextNode[item-'a'] == null) {
+        Node curr = root;
+        for(char c: word.toCharArray()) {
+            if(curr.children[c-'a'] == null) {
                 return false;
             }
-            tempRoot = tempRoot.nextNode[item-'a'];
+            curr = curr.children[c-'a'];
         }
-        return tempRoot.end;
+        return curr.isEOW;
     }
     
     public boolean startsWith(String prefix) {
-        Node tempRoot = root;
-        for(char item: prefix.toCharArray()) {
-            if(tempRoot.nextNode[item-'a'] == null) {
+        Node curr = root;
+        for(char c: prefix.toCharArray()) {
+            if(curr.children[c-'a'] == null) {
                 return false;
             }
-            tempRoot = tempRoot.nextNode[item-'a'];
+            curr = curr.children[c-'a'];
         }
         return true;
     }
