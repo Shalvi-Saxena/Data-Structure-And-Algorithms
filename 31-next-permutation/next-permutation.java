@@ -1,44 +1,41 @@
 class Solution {
-    public void swap(int[] nums, int i, int j) {
-        int temp = nums[j];
-        nums[j] = nums[i];
-        nums[i] = temp;
+
+    public void swap(int[] nums, int i, int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 
-    public void reverse(int[] nums, int i, int j) {
-        while(i<j) {
-            swap(nums, i, j);
+    public void reverse(int[] nums, int i){
+        int j = nums.length - 1;
+
+        while(i < j){
+            swap(nums,i,j);
             i++;
             j--;
         }
     }
 
-    public int findNextSmallest(int[] nums, int i) {
-        int small = i+1;
-        for(int j=i+1; j<nums.length; j++) {
-            if(nums[i] < nums[j] && nums[small] >= nums[j]) {
-                small = j;
-            }
-        }
-        return nums[small] >= nums[i]? small:i;
-    }
-
     public void nextPermutation(int[] nums) {
-        int n = nums.length;
-        int bp = n-2;
 
-        while(bp>=0 && nums[bp]>=nums[bp+1]) bp--;
+        int i = nums.length - 2;
 
-        if(bp<0) {
-            reverse(nums, 0, n-1);
-        } else {
-            int small = findNextSmallest(nums, bp);
-            if(small == bp) {
-                reverse(nums, bp+1, n-1);
-            } else {
-                swap(nums, small, bp);
-                reverse(nums, bp+1, n-1);
-            }
+        // Step 1: find breakpoint
+        while(i >= 0 && nums[i] >= nums[i+1])
+            i--;
+
+        // Step 2: swap with next greater element
+        if(i >= 0){
+
+            int j = nums.length - 1;
+
+            while(nums[j] <= nums[i])
+                j--;
+
+            swap(nums,i,j);
         }
+
+        // Step 3: reverse suffix
+        reverse(nums,i+1);
     }
 }
