@@ -1,17 +1,18 @@
 class Solution {
-    public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> powerSet = new ArrayList<>();
-        powerSet.add(new ArrayList<>());
+    private void getSubsets(List<List<Integer>> res, int[] nums, int i, List<Integer> curr) {
+        res.add(new ArrayList<>(curr));
 
-        for(int i=0; i<nums.length; i++) {
-            int size = powerSet.size();
-            for(int j=0; j<size; j++) {
-                List<Integer> tempSet = new ArrayList<>(powerSet.get(j));
-                tempSet.add(nums[i]);
-                powerSet.add(tempSet);
-            }
+        while(i<nums.length) {
+            curr.add(nums[i]);
+            getSubsets(res, nums, i+1, curr);
+            curr.remove(curr.size()-1);
+            i++;
         }
+    }
 
-        return powerSet;
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        getSubsets(res, nums, 0, new ArrayList<>());
+        return res;
     }
 }
