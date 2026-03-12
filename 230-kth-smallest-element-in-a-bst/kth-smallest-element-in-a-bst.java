@@ -18,11 +18,6 @@ class Solution {
     public void inOrder(TreeNode root, int k) {
         if(root == null)    return;
 
-        if(index == k) {
-            element = root.val;
-            return;
-        }
-
         inOrder(root.left, k);
         index++;
         if(index == k) {
