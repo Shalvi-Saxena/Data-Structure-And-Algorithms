@@ -1,54 +1,50 @@
 class Solution {
-    List<Integer> result = new ArrayList<>();
-    boolean[] visited;
-    boolean[] onPath;
-    boolean hasCycle = false;
+    List<Integer> res = new ArrayList<>();
 
-    public int[] findOrder(int numCourses, int[][] prerequisites) {
-        List<Integer>[] graph = new ArrayList[numCourses];
+    private boolean isPossible(List<List<Integer>> course, int n, int i, boolean[] isVisited, boolean[] isCycle) {
+        if(i>=n || isCycle[i])    return false;
+        if(isVisited[i])    return true;
 
-        for (int i = 0; i < numCourses; i++) {
-            graph[i] = new ArrayList<>();
-        }
+        isCycle[i] = true;
 
-        for (int[] p : prerequisites) {
-            graph[p[1]].add(p[0]);
-        }
-
-        visited = new boolean[numCourses];
-        onPath = new boolean[numCourses];
-
-        for (int i = 0; i < numCourses && !hasCycle; i++) {
-            if (!visited[i]) {
-                dfs(i, graph);
+        for(int item: course.get(i)) {
+            if(!isPossible(course, n, item, isVisited, isCycle)) {
+                return false;
             }
         }
 
-        if (hasCycle) return new int[0];
+        isVisited[i] = true;
+        res.add(i);
+        isCycle[i] = false;
 
-        int[] order = new int[numCourses];
-        for (int i = 0; i < numCourses; i++) {
-            order[i] = result.get(numCourses - 1 - i);
-        }
-
-        return order;
+        return true;
     }
 
-    private void dfs(int node, List<Integer>[] graph) {
-        if (onPath[node]) {
-            hasCycle = true;
-            return;
-        }
-        if (visited[node] || hasCycle) return;
+    public int[] findOrder(int n, int[][] prerequisites) {
+        List<List<Integer>> course = new ArrayList<>();
 
-        onPath[node] = true;
-
-        for (int next : graph[node]) {
-            dfs(next, graph);
+        for(int i=0; i<n; i++) {
+            course.add(new ArrayList<>());
         }
 
-        onPath[node] = false;
-        visited[node] = true;
-        result.add(node);
+        for(int[] c: prerequisites) {
+            course.get(c[0]).add(c[1]);
+        }
+
+        boolean[] isVisited = new boolean[n];
+
+        for(int i=0; i<n; i++) {
+            if(!isPossible(course, n, i, isVisited, new boolean[n])) {
+                return new int[0];
+            }
+        }
+
+        int[] result = new int[n];
+
+        for(int i=0; i<n; i++) {
+            result[i] = res.get(i);
+        }
+
+        return result;
     }
 }
