@@ -4,7 +4,7 @@ class Solution {
         int[] res = new int[n - k + 1];
         int idx = 0;
 
-        Deque<Integer> deque = new LinkedList<>();
+        Deque<Integer> deque = new ArrayDeque<>();
 
         for (int right = 0; right < n; right++) {
 
